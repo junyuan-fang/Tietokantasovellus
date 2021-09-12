@@ -1,5 +1,5 @@
 # Keskustelusovellus  
-Sovelluksessa näkyy keskustelualueita, joista jokaisella on tietty aihe. Alueilla on keskusteluketjuja, jotka muodostuvat viesteistä. Jokainen käyttäjä on peruskäyttäjä tai ylläpitäjä. Peruskäyttäjä voi luoda "private" tai "public" alueen. Peruskäyttääjä voi lisätä toinen peruskäyttäjä alueeseen, johon hän on liittynyt. Admin käyttäjä tulee vahvistaa pyyntöä etusivustolla. 
+Sovelluksessa näkyy keskustelualueita, joista jokaisella on tietty aihe. Alueilla on keskusteluketjuja, jotka muodostuvat viesteistä. Jokainen käyttäjä on peruskäyttäjä tai ylläpitäjä. Peruskäyttäjä voi luoda "private" tai "public" alueen. Peruskäyttääjä voi lisätä toinen peruskäyttäjä alueeseen, johon hän on liittynyt. Admin käyttäjä tulee vahvistaa pyyntöä etusivustolla. Ylläpitäjä pystyy vain poistamaan keskustelualuita. Julkisen tai salaisen keskustelualueen luomista varten pitää kirjautua peruskäyttäjänä.
 
 
 ## Sovelluksen ominaisuuksia:
@@ -28,7 +28,7 @@ Sovelluksessa näkyy keskustelualueita, joista jokaisella on tietty aihe. Alueil
     * Voi poistaa käyttäjä keskustelualueelta(Admin).
     * Pääsee keskustelualueelle takaisin .
 
+
 * Ylläpitäjä 
   * Näkee kaikki keskustelualueita
-  * Voi lisätä ja poistaa keskustelualueita.    
-  * Voi luoda salaisen alueen ja määrittää, keillä käyttäjillä on pääsy alueelle.
+  * Voi poistaa keskustelualueita.
