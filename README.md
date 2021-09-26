@@ -32,3 +32,13 @@ Sovelluksessa näkyy keskustelualueita, joista jokaisella on tietty aihe. Alueil
 * Ylläpitäjä 
   * Näkee kaikki keskustelualueita
   * Voi poistaa keskustelualueita.
+
+
+
+#### Nykyinen tilanne（26.09.2021）:
+* Tietokannan "CREATE" taulut näkyy "schema.sql" tiedostossa.
+* html-sivustot on jaettu karkeasti
+* Käyttäjäliittymä on piirretty karkeasti. 
+* Sivusto voidaan avata herokussa, mutta sivut ovat täysin tyhjiä.
+* Click [here](https://web-chatting-app.herokuapp.com/)
+
