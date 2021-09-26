@@ -36,9 +36,9 @@ Sovelluksessa näkyy keskustelualueita, joista jokaisella on tietty aihe. Alueil
 
 
 #### Nykyinen tilanne（26.09.2021）:
-* Tietokannan "CREATE" taulut näkyy "schema.sql" tiedostossa.
+* Tietokannan "CREATE" taulut näkyy "schema.sql" tiedostossa.<a href="https://github.com/junyuan-fang/WebChatting/blob/master/SQL.png" target="_blank">SQL.png</a>
 * html-sivustot on jaettu karkeasti
-* Käyttäjäliittymä on piirretty karkeasti. 
+* Käyttäjäliittymä on piirretty karkeasti. <a href="https://github.com/junyuan-fang/WebChatting/blob/master/Kayttoliittyma.pdf" target="_blank">Kayttoliittyma.pdf</a>
 * Sivusto voidaan avata herokussa, mutta sivut ovat täysin tyhjiä.
 * Click [here](https://web-chatting-app.herokuapp.com/)
 
