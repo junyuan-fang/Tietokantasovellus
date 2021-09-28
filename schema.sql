@@ -22,6 +22,7 @@ CREATE TABLE messages (
     topic_id INTEGER REFERENCES topic NOT NULL,
     user_id INTEGER REFERENCES users NOT NULL,
     content TEXT NOT NULL,
+    created_at TIMESTAMP,
     visibility BOOLEAN NOT NULL
 
 );
