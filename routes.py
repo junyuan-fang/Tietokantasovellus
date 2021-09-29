@@ -10,13 +10,13 @@ def index():
 def login():
     if request.method=="GET":
         return render_template("login.html")
-    else:
+    if request.method == "POST":
         username= request.form["username"]
-        passward= request.form["passward"]
+        passward= request.form["password"]
         if (users.login(username,passward)):
             return redirect("/")
         else:
-            return render_template("error.html",message="Wrong username or passward")
+            return render_template("error.html",message="Wrong username or password")
 
 @app.route("/logout")
 def logout():
@@ -27,13 +27,13 @@ def logout():
 def register():
     if request.method=="GET":
         return render_template("register.html")
-    else:
+    if request.method == "POST":
         username = request.form["username"]
-        passward1 = request.form["passward1"]
-        passward2 = request.form["passward2"]
-        if (passward1 != passward2 ):
+        password1 = request.form["password1"]
+        password2 = request.form["password2"]
+        if (password1 != password2 ):
             return render_template("error.html", message = "Passwords are different")
-        if(users.register(username, passward1)):
+        if(users.register(username, password1)):
             return redirect("/")
         else:
             return render_template("error.html", message = "Registration filed")
