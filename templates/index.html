@@ -1,0 +1,7 @@
+{% if session.user_id %}
+{{ session. user_id }}.
+You are logged in.
+<a href="/logout">Sign out</a>
+{% else %}
+<a href="/login">Sign in</a>
+{% endif %}
