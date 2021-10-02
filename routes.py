@@ -2,9 +2,13 @@ from app import app
 import users
 from flask import request, render_template, redirect
 
+# @app.route("/")
+# def index():
+#     return render_template("index.html")
+
 @app.route("/")
-def index():
-    return render_template("index.html")
+def welcome():
+    return render_template("welcome.html")
 
 @app.route("/login",methods=["GET","POST"])
 def login():

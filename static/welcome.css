@@ -1,0 +1,57 @@
+
+body {
+    font-family: 'Helvetica', 'Arial', sans-serif;
+    margin: auto;
+    max-width: 80em;
+    background: lavender;
+}
+.header{
+    padding: 4em 2em;
+    font-size: 3em;
+    background: PapayaWhip;
+    border-radius:.5em;
+    animation: change 5s linear 0s infinite;
+}
+h1{
+    text-align: center;
+}
+h1 a{
+    text-decoration: none;
+        color:#000;
+}
+h1 :hover{
+    background-color: rgb(226, 226, 226);
+}
+
+@keyframes change {
+0% {color: #333;}
+
+25% {color: rgb(255, 0, 255);}
+
+50% {color: #f00;}
+
+75% {color: rgb(105, 11, 11);}
+
+100% {color: #333;}
+}
+nav li {
+    display: inline-block;
+    padding: .7em 1em .5em;
+    border-radius: .5em;
+    background: white;
+    margin: .2em;
+    }
+nav ul{
+    padding: 0;
+    margin: .5em;
+    text-align:center
+}
+nav li a{
+    animation: change 5s linear 0s infinite;
+    text-decoration: none;
+    color:#000;
+}
+
+nav li :hover{
+    background-color: rgb(226, 226, 226);
+}

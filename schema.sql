@@ -1,3 +1,4 @@
+drop table if exists forums,users,user_forum,topic,messages,request
 CREATE TABLE forums (
     forum_id SERIAL PRIMARY KEY,
     theme TEXT NOT NULL,

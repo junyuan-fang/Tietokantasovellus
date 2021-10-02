@@ -1,3 +1,22 @@
+<style>
+    a{
+        animation: change 5s linear 0s infinite;
+
+    }
+
+@keyframes change {
+0% {color: #333;}
+
+25% {color: rgb(255, 0, 255);}
+
+50% {color: #f00;}
+
+75% {color: rgb(105, 11, 11);}
+
+100% {color: #333;}
+}
+
+</style>
 {% if session.user_id %}
 {{ session. user_id }}.
 You are logged in.
