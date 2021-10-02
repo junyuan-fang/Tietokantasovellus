@@ -1,26 +1,14 @@
-<style>
-    a{
-        animation: change 5s linear 0s infinite;
 
-    }
+{% extends "layout.html" %}
+{% block content %}
 
-@keyframes change {
-0% {color: #333;}
 
-25% {color: rgb(255, 0, 255);}
-
-50% {color: #f00;}
-
-75% {color: rgb(105, 11, 11);}
-
-100% {color: #333;}
-}
-
-</style>
 {% if session.user_id %}
 {{ session. user_id }}.
 You are logged in.
-<a href="/logout">Sign out</a>
 {% else %}
-<a href="/login">Sign in</a>
+<a class="link" href="/login">Sign in</a>
 {% endif %}
+
+
+{% endblock %}

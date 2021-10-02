@@ -1,1 +1,17 @@
-Error: {{ message }}
+<style>
+    p {
+    zoom:100%;
+    position:absolute;
+    left :50%;
+    transform: translate(-50%);
+    font-family: "Montserrat";
+    }
+</style>
+{% extends "layout.html" %}
+{% block content %}
+
+
+<p>Error: {{ message }}</p>
+
+
+{% endblock %}

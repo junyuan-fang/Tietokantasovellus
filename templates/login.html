@@ -1,13 +1,52 @@
-<!DOCTYPE html>
-<link rel="stylesheet" type= "text/css" href="{{ url_for('static',filename='login.css') }}">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<div class=headerBar>
-    <h1>
-        Webchatting
-    </h1>
-</div>
-<body>
-    
+{% extends "layout.html" %}
+{% block content %}
+<style>
+
+.content{
+    position:absolute;
+
+    left :50%;
+    max-width: 22em;
+    background: white;
+    padding: 2em 2em;
+    border-radius: .5em;
+    transform: translate(-50%);
+}
+span a{
+    text-decoration: none;
+}
+span :hover{
+    background-color: rgb(226, 226, 226);
+}
+form {
+    zoom: 125%;
+    text-align: center;
+    padding: 1em;
+    background: PapayaWhip;
+    display: grid;
+    max-width: 15em;
+    border-radius: .5em;
+    grid-template-columns: 5em 10em;
+    grid-row-gap: .5em;
+}  
+form #login-button{
+    grid-column-start: 2;
+    padding:5px;
+    border: none;
+    text-align: center;
+    width: 5em;
+    margin: auto 0 auto 5.5em;
+    background: tan;
+    border-radius: .5em;
+} 
+form #login-button:hover {
+    background: rgb(195, 166, 128);
+    color: white;
+}
+form label, input {
+    margin: auto 0;
+}
+</style>
 
     <div class="content">
         <form autocomplete="off" action="/login" method="POST">
@@ -17,6 +56,9 @@
         <input type="password" name="password">
         <input id ="login-button" type="submit" value="Login">
         </form>
+        <p>
+        <span>If you do not have an account, you can create a new one <a href="/register">here</a></span>
     </div>
-If you do not have an account, you can create a new one <a href="/register">here</a>
-</body>
+
+
+{% endblock %}

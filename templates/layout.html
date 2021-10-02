@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/main.css"> <!-- herf="{{ url_for('static',filename='main.css') }}"> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+<body>
+    <div class="header">
+        <div class= "inner_header"> 
+                <div class="logo_container">
+                    <h1>Web<span>Chatting</span></h1>
+        </div>
+        {% if session.user_id %}
+        <ul class="logged_in">
+            <li><a href="/logout">Logout</a></li>
+        {% endif %}
+    </div>
+    {% block content %}{% endblock %}
+  </body>
+
+</html>

@@ -4,8 +4,7 @@ from flask import request, render_template, redirect, sessions
 
 @app.route("/")
 def index():
-    print ("Here",users.user_id())
-    if users.user_id()=="":
+    if users.user_id()==0 :
         return redirect("welcome")
     else:    
         return render_template("index.html")
@@ -36,19 +35,19 @@ def register():
     if request.method=="GET":
         return render_template("register.html")
     if request.method == "POST":
+        
         username = request.form["username"]
         password1 = request.form["password1"]
         password2 = request.form["password2"]
+        if username=="":#username can not be empty
+            return render_template("error.html", message = "Username can not be empty")
         if (password1 != password2 ):
             return render_template("error.html", message = "Passwords are different")
         if(users.register(username, password1)):
             return redirect("/")
-        else:
+        else:#username exists
             return render_template("error.html", message = "Registration filed")
     
-
-
-
 
 
 

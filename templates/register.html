@@ -1,9 +1,64 @@
-<form autocomplete="off" action="/register" method="POST">
-Username:<input type="text" name="username">
-<p>
-Password:<input type="password" name="password1">
-<p>
-passward again:<input type="password" name="password2">
-<p>
-<input type="submit" value="Create account">
-</form>
+{% extends "layout.html" %}
+{% block content %}
+<style>
+
+.content{
+    position:absolute;
+
+    left :50%;
+    max-width: 27em;
+    background: white;
+    padding: 2em 2em;
+    border-radius: .5em;
+    transform: translate(-50%);
+}
+span a{
+    text-decoration: none;
+}
+span :hover{
+    background-color: rgb(226, 226, 226);
+}
+form {
+    zoom: 125%;
+    text-align: center;
+    padding: 1em;
+    background: PapayaWhip;
+    display: grid;
+    max-width: 20em;
+    border-radius: .5em;
+    grid-template-columns: 10em 10em;
+    grid-row-gap: .5em;
+}  
+form #login-button{
+    grid-column-start: 2;
+    padding:5px;
+    border: none;
+    text-align: center;
+    width: 5em;
+    margin: auto 0 auto 5.5em;
+    background: tan;
+    border-radius: .5em;
+} 
+form #login-button:hover {
+    background: rgb(195, 166, 128);
+    color: white;
+}
+form label, input {
+    margin: auto 0;
+}
+</style>
+
+<div class="content">
+    <form autocomplete="off" action="/register" method="POST">
+        <label for="username">Username:</label>
+        <input type="text" name="username">
+        <label for="password">Password:</label>
+        <input type="password" name="password1">
+        <label for="password">Password again:</label>
+        <input type="password" name="password2">
+        <input type="submit" value="Create account">
+        </form>
+</div>
+
+
+{% endblock %}
