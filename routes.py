@@ -1,12 +1,16 @@
 from app import app
 import users
-from flask import request, render_template, redirect
-
-# @app.route("/")
-# def index():
-#     return render_template("index.html")
+from flask import request, render_template, redirect, sessions
 
 @app.route("/")
+def index():
+    print ("Here",users.user_id())
+    if users.user_id()=="":
+        return redirect("welcome")
+    else:    
+        return render_template("index.html")
+
+@app.route("/welcome")
 def welcome():
     return render_template("welcome.html")
 
