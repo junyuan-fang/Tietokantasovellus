@@ -2,6 +2,7 @@ drop table if exists forums,users,user_forum,topic,messages,request
 CREATE TABLE forums (
     forum_id SERIAL PRIMARY KEY,
     theme TEXT NOT NULL,
+    public BOOLEAN NOT NULL,
     visibility BOOLEAN NOT NULL
 );
 
@@ -14,7 +15,7 @@ CREATE TABLE users (
 CREATE TABLE user_forum (
     forum_id INTEGER REFERENCES forums ON DELETE CASCADE,
     user_id INTEGER REFERENCES users ON DELETE SET NULL,
-    isOwner INTEGER NOT NULL
+    isOwner BOOLEAN NOT NULL
 );
 
 CREATE TABLE topic (

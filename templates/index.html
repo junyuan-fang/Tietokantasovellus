@@ -3,12 +3,20 @@
 {% block content %}
 
 
-{% if session.user_id %}
-{{ session. user_id }}.
-You are logged in.
-{% else %}
-<a class="link" href="/login">Sign in</a>
-{% endif %}
+<div class="wrapper">
+    {% if session.user_account %}
+    <p>{{ session. user_account }}.You are logged in.</p>
+    <a href="/create_forum">Click here</a> to create your own forum.
+    <h2>Form:</h2>
+    <div class="vessel">
+        
+    </div>
+
+
+    {% else %}
+    <a class="link" href="/login">Sign in</a>
+    {% endif %}
+</div>
 
 
 {% endblock %}

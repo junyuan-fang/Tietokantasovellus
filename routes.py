@@ -1,6 +1,6 @@
 from app import app
-import users
-from flask import request, render_template, redirect, sessions
+import users, forums
+from flask import request, render_template, redirect, session, abort
 
 @app.route("/")
 def index():
@@ -46,8 +46,27 @@ def register():
         if(users.register(username, password1)):
             return redirect("/")
         else:#username exists
-            return render_template("error.html", message = "Registration filed")
-    
+            return render_template("error.html", message = "Registration failed")
+
+@app.route("/create_forum", methods = ["GET", "POST"])
+def create_forum():
+    if session["csrf_token"] != request.form["csrf_token"]:
+        abort(403)
+    if request.method=="GET":   
+        return render_template("create_forum.html")
+    if request.method=="POST":
+        theme = request.form["theme"]
+        public_value = request.form["public"]
+        if theme=="":
+            return render_template("error.html", message= "Theme can not be empty")
+        if(forums.create_forum(theme,public_value)):
+            return redirect("/")
+        else:
+            return render_template("error.html", message = "Registration failed")
+        
+
+
+
 
 
 
