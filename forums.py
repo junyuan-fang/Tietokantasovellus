@@ -18,5 +18,10 @@ def create_forum(theme, public_value):
         print(e)
         return False
 
+def remove_forum(forum_id):
+  sql = "UPDATE forums SET visible=FALSE WHERE forum_id=:id"
+  db.session.execute(sql, { "id":forum_id })
+  db.session.commit()
+
 
 

@@ -23,13 +23,13 @@
 
         {% for forum in forums %}
         <tr>
-
+        {% if forum.visibility==True%}
         <td>{{forum.public}}</td>
         <td><a href= "{{ '/forum/%s'%forum.forum_id }}"%forum.forum_id>{{forum.theme}}</a></td>
         <td></td>
         <td></td>
         <td></td>
-
+        {% endif%}
         </tr>
 
         {% endfor %}

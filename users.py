@@ -50,7 +50,7 @@ def get_forums(user_id):
     #       "INNER JOIN users U on U.user_id=UF.user_id"\
     #       "INNER JOIN forums F on F.forum_id=UF.forum_id"\
     #       "WHERE U.user_id=: user_id"
-    sql = "SELECT F.forum_id, F.theme, F.public FROM user_forum UF INNER JOIN users U on U.user_id=UF.user_id INNER JOIN forums F on F.forum_id=UF.forum_id WHERE U.user_id=(:user_id)"
+    sql = "SELECT F.forum_id, F.theme, F.public, F.visibility FROM user_forum UF INNER JOIN users U on U.user_id=UF.user_id INNER JOIN forums F on F.forum_id=UF.forum_id WHERE U.user_id=(:user_id)"
     result = db.session.execute(sql, {"user_id": user_id})
     return result.fetchall()
         
