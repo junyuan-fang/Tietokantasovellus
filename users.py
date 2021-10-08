@@ -44,5 +44,13 @@ def register(username, password):
     return login(username,password)
 
 def get_forums(user_id):
-    pass
+    #SELECT-line need to be changed later, because time stamp is not included
+    # sql = "SELECT F.theme, F.public"\
+    #       "FROM user_forum UF"\
+    #       "INNER JOIN users U on U.user_id=UF.user_id"\
+    #       "INNER JOIN forums F on F.forum_id=UF.forum_id"\
+    #       "WHERE U.user_id=: user_id"
+    sql = "SELECT F.forum_id, F.theme, F.public FROM user_forum UF INNER JOIN users U on U.user_id=UF.user_id INNER JOIN forums F on F.forum_id=UF.forum_id WHERE U.user_id=(:user_id)"
+    result = db.session.execute(sql, {"user_id": user_id})
+    return result.fetchall()
         

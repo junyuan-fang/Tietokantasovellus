@@ -9,6 +9,32 @@
     <a href="/create_forum">Click here</a> to create your own forum.
     <h2>Form:</h2>
     <div class="vessel">
+    <table>
+
+        <tr>
+
+        <th>Public</th>
+        <th>Theme</th>
+        <th>Topics</th>
+        <th>Messages</th>
+        <th>Last message sent at</th>
+
+        </tr>
+
+        {% for forum in forums %}
+        <tr>
+
+        <td>{{forum.public}}</td>
+        <td><a href= "{{ '/forum/%s'%forum.forum_id }}"%forum.forum_id>{{forum.theme}}</a></td>
+        <td></td>
+        <td></td>
+        <td></td>
+
+        </tr>
+
+        {% endfor %}
+
+    </table>
         
     </div>
 

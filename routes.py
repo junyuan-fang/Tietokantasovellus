@@ -7,7 +7,8 @@ def index():
     if users.user_id()==0 :
         return redirect("welcome")
     else:    
-        return render_template("index.html")
+        forums_list=users.get_forums(users.user_id())
+        return render_template("index.html",forums=forums_list)#, forums=forums_list
 
 @app.route("/welcome")
 def welcome():
@@ -50,8 +51,8 @@ def register():
 
 @app.route("/create_forum", methods = ["GET", "POST"])
 def create_forum():
-    if session["csrf_token"] != request.form["csrf_token"]:
-        abort(403)
+    # if session["csrf_token"] != request.form["csrf_token"]:
+    #     abort(403)
     if request.method=="GET":   
         return render_template("create_forum.html")
     if request.method=="POST":
@@ -64,15 +65,12 @@ def create_forum():
         else:
             return render_template("error.html", message = "Registration failed")
         
+@app.route("/forum/<int:forum_id>", methods = ["GET", "POST"])
+def forum(forum_id):
+    #get toppics
+    #html can add topics and can delete recent forum
+    pass
+    return render_template("forum.html")
 
 
 
-
-
-
-@app.route("/forum") #/forum/<int:id>
-def forum():
-    return "Working!"
-@app.route("/topic") #/topic/<int:id>
-def topic():
-    return "Working!"
