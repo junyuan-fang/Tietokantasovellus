@@ -32,7 +32,7 @@
         {% if topic.visibility==True%}
         <td><a href= "{{ '/topic/%s'%topic.topic_id }}"%topic.topic_id>{{topic.topic_id}}</a></td>
         <td>{{ topic.title }}</td>
-        <td></td>
+        <td>{{ topic.num}}</td>
         {% endif%}
         </tr>
 

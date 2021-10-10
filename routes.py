@@ -48,7 +48,7 @@ def register():
             return redirect("/")
         else:#username exists
             return render_template("error.html", message = "Registration failed")
-
+ 
 #create forum
 @app.route("/create_forum", methods = ["GET", "POST"])
 def create_forum():
@@ -66,6 +66,8 @@ def create_forum():
             return redirect("/")
         else:
             return render_template("error.html", message = "Registration failed")
+#-----------------------------------------------------------------------------------------
+#on the forum page:
 
 #Forum shows topics
 @app.route("/forum/<int:forum_id>", methods = ["GET", "POST"])##
@@ -74,8 +76,7 @@ def forum(forum_id):
     #html can add topics and can delete recent forum
     #get forum's topics
     theme=forums.get_theme(forum_id)
-    #forum get topics
-    topics_list=forums.get_topics(forum_id)
+    topics_list=forums.get_topics(forum_id)####
     return render_template("forum.html", forum_id=forum_id ,theme=theme, topics=topics_list)
 
 #for deleting forums
@@ -105,15 +106,45 @@ def create_topic(forum_id):
             return render_template("/forum.html",forum_id=forum_id ,theme=theme, topics=topics_list)##
         else:#unknow problem
             return render_template("error.html", message = "Failed to create topic")
-        
+#-----------------------------------------------------------------------------------------
+#on the topic page:
+
 #Topic shows messages
 @app.route("/topic/<int:topic_id>", methods = ["GET", "POST"])
 def topic(topic_id):
-    title= topics.get_title(topic_id)
-    return render_template("topic.html",title=title, topic_id=topic_id)
+    title= topics.get_title(topic_id)#
+    messages_list=topics.get_messages(topic_id)
+    return render_template("topic.html",title=title, topic_id=topic_id, messages=messages_list)
 
 #for deleting topics
-@app.route("/remove/topic/<int:forum_id>")
+@app.route("/remove/topic/<int:topic_id>")
 def remove_topic(topic_id):
     topics.remove_topic(topic_id)
-    return redirect("/")##
+    forum_id= topics.get_forum_id(topic_id)
+    theme=forums.get_theme(forum_id)
+    topics_list=forums.get_topics(forum_id)##
+
+    return render_template("/forum.html",forum_id=forum_id ,theme=theme, topics=topics_list)## messages num
+
+#create message in topic    
+@app.route("/create/message/<int:topic_id>", methods = ["GET", "POST"])
+def create_message(topic_id):
+    if request.method=="GET":
+        return render_template("create_message.html", topic_id=topic_id)
+    if request.method=="POST":
+        if session["csrf_token"] != request.form["csrf_token"]:
+            abort(403)
+        message = request.form["message"]
+        
+        if message=="":
+            return render_template("error.html", message= "Message can not be empty")
+        if(topics.create_message(topic_id, message)):##
+            title=topics.get_title(topic_id)##
+            messages=topics.get_messages(topic_id)
+            return render_template("topic.html",title=title, topic_id=topic_id, messages=messages)
+        else:#unknow problem
+            return render_template("error.html", message = "Failed to create topic")
+        
+#-----------------------------------------------------------------------------------------
+#  delete message
+

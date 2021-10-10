@@ -33,12 +33,16 @@ def get_theme(forum_id):
     theme= result.fetchone()[0]
     return theme
 
+#used inner form
 def get_topics(forum_id):
-
-    sql = "SELECT T.topic_id, T.title, T.visibility, T.user_id FROM topic T WHERE T.forum_id=:forum_id"
+    #SELECT T.topic_id, T.title, T.visibility, T.user_id, counter.num FROM topic T,(SELECT T.topic_id AS topic_id, COUNT(*) AS num FROM topic T INNER JOIN messages M ON M.topic_id=T.topic_id WHERE T.visibility=True AND M.visibility=True GROUP BY T.topic_id ) AS counter WHERE counter.topic_id=T.topic_id;
+    inner_form=",(SELECT T.topic_id AS topic_id, COUNT(*) AS num FROM topic T INNER JOIN messages M ON M.topic_id=T.topic_id WHERE T.visibility=True AND M.visibility=True GROUP BY T.topic_id ) AS counter " 
+    inner_select=", counter.num"
+    inner_where= "AND counter.topic_id=T.topic_id"
+    sql = "SELECT T.topic_id, T.title, T.visibility, T.user_id"+inner_select+" FROM topic T"+inner_form+" WHERE T.forum_id=:forum_id "+inner_where
     result = db.session.execute(sql, {"forum_id": forum_id})
     return result.fetchall()
-
+ 
 #create topic, where include on initial messages
 def create_topic(topic, initial_message, forum_id):
     
