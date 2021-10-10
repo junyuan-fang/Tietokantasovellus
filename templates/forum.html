@@ -3,7 +3,8 @@
 <div class="wrapper">
 {% if session.user_account %}
 <p>{{ session. user_account  }}.You are logged in.</p>
-<p>Welcome to the theme: "{{theme}}"</p>
+<p>Welcome to the theme: </p>
+<h2>"{{theme}}"</h2>
 <br>
 <div class="div_table">
     <form action= "{{ '/create/topic/%d'%forum_id }}" > 
@@ -15,7 +16,7 @@
 </div>
 <br>
 
-<h2>Topic:</h2>
+<h4>Topic:</h4>
 <div class="vessel">
     <table>
 
@@ -45,7 +46,7 @@
 
 
 
-
+    <a href="/">back to home page </a>
 {% endif %}
 </div>
 {% endblock %}

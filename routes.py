@@ -112,9 +112,11 @@ def create_topic(forum_id):
 #Topic shows messages
 @app.route("/topic/<int:topic_id>", methods = ["GET", "POST"])
 def topic(topic_id):
-    title= topics.get_title(topic_id)#
+    title= topics.get_title(topic_id)
+    forum_id= topics.get_forum_id(topic_id)
+    theme=forums.get_theme(forum_id)
     messages_list=topics.get_messages(topic_id)
-    return render_template("topic.html",title=title, topic_id=topic_id, messages=messages_list)
+    return render_template("topic.html",title=title, topic_id=topic_id, messages=messages_list, forum_id=forum_id, theme=theme)
 
 #for deleting topics
 @app.route("/remove/topic/<int:topic_id>")

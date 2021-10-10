@@ -3,7 +3,9 @@
 <div class="wrapper">
 {% if session.user_account %}
 <p>{{ session. user_account  }}.You are logged in.</p>
-<p>Welcome to the topic: "{{title}}"</p>
+<p>Welcome to the topic: </p>
+
+<h2>"{{title}}"</h2>
 <br>
 <div class="div_table">
     <form action= "{{ '/create/message/%d'%topic_id }}" > 
@@ -15,7 +17,7 @@
 </div>
 <br>
 
-<h2>Messages:</h2>
+<h4>Messages:</h4>
 <div class="vessel">
     <table>
 
@@ -45,9 +47,7 @@
     </div>
 
 
-
-
-
+    back to <a href="{{ '/forum/%s'%forum_id }}"> {{theme}} </a>
 {% endif %}
 </div>
 {% endblock %}
