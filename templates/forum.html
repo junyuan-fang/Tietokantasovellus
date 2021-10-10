@@ -6,7 +6,7 @@
 <p>Welcome to the theme: "{{theme}}"</p>
 <br>
 <div class="div_table">
-    <form action= "{{ '/create/topic/%d'%forum_id }}" method="POST"> 
+    <form action= "{{ '/create/topic/%d'%forum_id }}" > 
         <button type="submit">Create topic </button>
     </form>
     <form action= "{{ '/remove/forum/%s'%forum_id }}"> 
@@ -15,9 +15,36 @@
 </div>
 <br>
 
+<h2>Topic:</h2>
+<div class="vessel">
+    <table>
+
+        <tr>
+
+        <th>Topic id</th>
+        <th>Title</th>
+        <th>Messages</th>
+
+        </tr>
+
+        {% for topic in topics %}
+        <tr>
+        {% if topic.visibility==True%}
+        <td><a href= "{{ '/topic/%s'%topic.topic_id }}"%topic.topic_id>{{topic.topic_id}}</a></td>
+        <td>{{ topic.title }}</td>
+        <td></td>
+        {% endif%}
+        </tr>
+
+        {% endfor %}
+
+    </table>
+        
+    </div>
 
 
-<h2>Form:</h2>
+
+
 
 {% endif %}
 </div>

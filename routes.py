@@ -72,10 +72,11 @@ def create_forum():
 def forum(forum_id):
     #get toppics
     #html can add topics and can delete recent forum
-    #get forum's messages
+    #get forum's topics
     theme=forums.get_theme(forum_id)
-
-    return render_template("forum.html", forum_id=forum_id ,theme=theme)
+    #forum get topics
+    topics_list=forums.get_topics(forum_id)
+    return render_template("forum.html", forum_id=forum_id ,theme=theme, topics=topics_list)
 
 #for deleting forums
 @app.route("/remove/forum/<int:forum_id>")
@@ -91,14 +92,17 @@ def create_topic(forum_id):
     if request.method=="POST":
         if session["csrf_token"] != request.form["csrf_token"]:
             abort(403)
-        initial_message = request.form["message"]
         topic = request.form["topic"]
+        initial_message = request.form["message"]
+        
         if initial_message=="":
             return render_template("error.html", message= "Message can not be empty")
         if topic=="":
             return render_template("error.html", message= "Topic can not be empty")
-        if(create_topic(topic, initial_message)):
-            return redirect("/")
+        if(forums.create_topic(topic, initial_message, forum_id)):##
+            theme=forums.get_theme(forum_id)##
+            topics_list=forums.get_topics(forum_id)##
+            return redirect("/forum.html",forum_id=forum_id ,theme=theme, topics=topics_list)##
         else:#unknow problem
             return render_template("error.html", message = "Failed to create topic")
         
