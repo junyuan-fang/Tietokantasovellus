@@ -24,26 +24,30 @@
     grid-template-columns: 5em 10em;
     grid-row-gap: .5em;
     }  
-    form div{
-        margin:auto auto auto 0;
-        grid-column-start: 2;
+    form label {
+    margin: 0  auto auto 0;
     }
-    form label, input {
-    margin: auto  auto auto 0;
+    textarea {
+    width: 156px%;
+}
 }
     </style>
+
+
+
+
 <div class="content">
 <form autocomplete="off" action="/create_forum" method="POST">
-    <label>Theme:</label>
-    <input type=text name="theme">
-    <label>Type:</label>
-    <div>
-    <input type="radio" name="public" value="1" id="public" checked="checked"> Public
-    <input type="radio" name="public" value="0" id="private"> Private
-    </div>
+    <label>Topic:</label>
+    <input type=text name="topic">
+    <label>Message:</label>
+    <textarea name="message" rows="3" cols="40" maxlength="300" placeholder="The maximum number of characters are 300"></textarea>
     <input id ="button" type="submit" value="Send">
     <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 </form>
 </div>
 {% endif %}
 {% endblock %}
+
+
+    

@@ -102,3 +102,22 @@ table {
     text-align: left;
   }
 
+  .div_table{
+      display: table;
+  }
+
+  button{
+    padding:5px;
+    border: tan;
+    font-size: 1em;
+    margin: auto 1.2em auto auto;
+    background: white;
+    border-radius: .5em;
+} 
+
+form{
+    display: inline;
+}
+
+
+

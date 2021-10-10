@@ -19,9 +19,21 @@ def create_forum(theme, public_value):
         return False
 
 def remove_forum(forum_id):
-  sql = "UPDATE forums SET visible=FALSE WHERE forum_id=:id"
-  db.session.execute(sql, { "id":forum_id })
-  db.session.commit()
+    print(forum_id)
+    sql = "UPDATE forums SET visibility=FALSE WHERE forum_id=:id"
+    db.session.execute(sql, { "id":forum_id })
+    db.session.commit()
 
+#return str
+def get_theme(forum_id):
+    sql = "SELECT F.theme FROM forums F WHERE F.forum_id=:forum_id"
+    result = db.session.execute(sql, { "forum_id":forum_id })
+    print("THE TYPE OF RESULT IS ",result)
+    theme= result.fetchone()[0]
+    return theme
 
+#create topic, where include on initial messages
+def create_topic(topic, message):
+    pass 
+    return True
 

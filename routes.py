@@ -49,13 +49,15 @@ def register():
         else:#username exists
             return render_template("error.html", message = "Registration failed")
 
+#create forum
 @app.route("/create_forum", methods = ["GET", "POST"])
 def create_forum():
-    # if session["csrf_token"] != request.form["csrf_token"]:
-    #     abort(403)
+    
     if request.method=="GET":   
         return render_template("create_forum.html")
     if request.method=="POST":
+        if session["csrf_token"] != request.form["csrf_token"]:
+            abort(403)
         theme = request.form["theme"]
         public_value = request.form["public"]
         if theme=="":
@@ -64,13 +66,40 @@ def create_forum():
             return redirect("/")
         else:
             return render_template("error.html", message = "Registration failed")
-        
+
+#show forums
 @app.route("/forum/<int:forum_id>", methods = ["GET", "POST"])
 def forum(forum_id):
     #get toppics
     #html can add topics and can delete recent forum
-    pass
-    return render_template("forum.html")
+    #get forum's messages
+    theme=forums.get_theme(forum_id)
 
+    return render_template("forum.html", forum_id=forum_id ,theme=theme)
 
+#for deleting forums
+@app.route("/remove/forum/<int:forum_id>")
+def remove(forum_id):
+    forums.remove_forum(forum_id)
+    return redirect("/")
+
+#create topics
+@app.route("/create/topic/<int:forum_id>", methods = ["GET", "POST"])
+def create_topic(forum_id):
+    if request.method=="GET":
+        return render_template("create_topic.html", forum_id=forum_id)
+    if request.method=="POST":
+        if session["csrf_token"] != request.form["csrf_token"]:
+            abort(403)
+        initial_message = request.form["message"]
+        topic = request.form["topic"]
+        if initial_message=="":
+            return render_template("error.html", message= "Message can not be empty")
+        if topic=="":
+            return render_template("error.html", message= "Topic can not be empty")
+        if(create_topic(topic, initial_message)):
+            return redirect("/")
+        else:#unknow problem
+            return render_template("error.html", message = "Failed to create topic")
+        
 
