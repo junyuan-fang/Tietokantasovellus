@@ -140,10 +140,12 @@ def create_message(topic_id):
         
         if message=="":
             return render_template("error.html", message= "Message can not be empty")
-        if(topics.create_message(topic_id, message)):##
-            title=topics.get_title(topic_id)##
-            messages=topics.get_messages(topic_id)
-            return render_template("topic.html",title=title, topic_id=topic_id, messages=messages)
+        if(topics.create_message(topic_id, message)):
+            title=topics.get_title(topic_id)
+            forum_id= topics.get_forum_id(topic_id)
+            theme=forums.get_theme(forum_id)
+            messages_list=topics.get_messages(topic_id)
+            return render_template("topic.html",title=title, topic_id=topic_id, messages=messages_list, forum_id=forum_id, theme=theme)
         else:#unknow problem
             return render_template("error.html", message = "Failed to create topic")
         
