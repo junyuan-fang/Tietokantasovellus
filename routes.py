@@ -1,5 +1,5 @@
 from app import app
-import users, forums
+import users, forums, topics
 from flask import request, render_template, redirect, session, abort
 
 @app.route("/")
@@ -67,8 +67,8 @@ def create_forum():
         else:
             return render_template("error.html", message = "Registration failed")
 
-#show forums
-@app.route("/forum/<int:forum_id>", methods = ["GET", "POST"])
+#Forum shows topics
+@app.route("/forum/<int:forum_id>", methods = ["GET", "POST"])##
 def forum(forum_id):
     #get toppics
     #html can add topics and can delete recent forum
@@ -80,7 +80,7 @@ def forum(forum_id):
 
 #for deleting forums
 @app.route("/remove/forum/<int:forum_id>")
-def remove(forum_id):
+def remove_forum(forum_id):
     forums.remove_forum(forum_id)
     return redirect("/")
 
@@ -102,8 +102,18 @@ def create_topic(forum_id):
         if(forums.create_topic(topic, initial_message, forum_id)):##
             theme=forums.get_theme(forum_id)##
             topics_list=forums.get_topics(forum_id)##
-            return redirect("/forum.html",forum_id=forum_id ,theme=theme, topics=topics_list)##
+            return render_template("/forum.html",forum_id=forum_id ,theme=theme, topics=topics_list)##
         else:#unknow problem
             return render_template("error.html", message = "Failed to create topic")
         
+#Topic shows messages
+@app.route("/topic/<int:topic_id>", methods = ["GET", "POST"])
+def topic(topic_id):
+    title= topics.get_title(topic_id)
+    return render_template("topic.html",title=title, topic_id=topic_id)
 
+#for deleting topics
+@app.route("/remove/topic/<int:forum_id>")
+def remove_topic(topic_id):
+    topics.remove_topic(topic_id)
+    return redirect("/")##

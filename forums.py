@@ -41,12 +41,16 @@ def get_topics(forum_id):
 
 #create topic, where include on initial messages
 def create_topic(topic, initial_message, forum_id):
-    #1. insert to topic
+    
     try:
+        #1. insert to topic
         sql = "INSERT INTO topic (user_id, forum_id, title, visibility) VALUES (:user_id, :forum_id, :topic,:visibility) RETURNING topic_id"
         result=db.session.execute(sql,{"user_id": session["user_id"], "forum_id": forum_id, "topic":topic, "visibility": True})
-        db.session.commit()
         #2. insert to message
+        topic_id= result.fetchone()[0]
+        sql = "INSERT INTO messages ( topic_id, user_id, content, created_at, visibility) VALUES (:topic_id, :user_id, :content, NOW(), :visibility)"
+        db.session.execute(sql, {"topic_id":topic_id, "user_id":session["user_id"], "content": initial_message, "visibility": True})
+        db.session.commit()
         return True
 
     except Exception as e:

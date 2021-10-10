@@ -1,4 +1,29 @@
 {% extends "layout.html" %}
 {% block content %}
+<div class="wrapper">
+{% if session.user_account %}
+<p>{{ session. user_account  }}.You are logged in.</p>
+<p>Welcome to the topic: "{{title}}"</p>
+<br>
+<div class="div_table">
+    <form action= "{{ '/create/message/%d'%topic_id }}" > 
+        <button type="submit">Create message </button>
+    </form>
+    <form action= "{{ '/remove/topic/%s'%topic_id }}"> 
+        <button type="submit">Remove topic </button>
+    </form>
+</div>
+<br>
 
+<h2>Messages:</h2>
+
+
+
+
+
+
+{% endif %}
+</div>
 {% endblock %}
+
+
