@@ -66,6 +66,20 @@ def create_forum():
             return redirect("/")
         else:
             return render_template("error.html", message = "Registration failed")
+
+@app.route("/search_messages", methods=["GET", "POST"])#######################
+def search_messages():
+    if request.method=="POST":
+        if session["csrf_token"] != request.form["csrf_token"]:
+            abort(403)
+        return render_template("searched_messages.html")
+
+    return render_template("search_messages.html")
+
+@app.route("/searched_messages")
+def searched_messages():
+    return render_template("searched_messages.html")
+
 #-----------------------------------------------------------------------------------------
 #on the forum page:
 
@@ -88,8 +102,6 @@ def remove_forum(forum_id):
 #create topics
 @app.route("/create/topic/<int:forum_id>", methods = ["GET", "POST"])
 def create_topic(forum_id):
-    if request.method=="GET":
-        return render_template("create_topic.html", forum_id=forum_id)
     if request.method=="POST":
         if session["csrf_token"] != request.form["csrf_token"]:
             abort(403)
@@ -106,6 +118,7 @@ def create_topic(forum_id):
             return render_template("/forum.html",forum_id=forum_id ,theme=theme, topics=topics_list)##
         else:#unknow problem
             return render_template("error.html", message = "Failed to create topic")
+    return render_template("create_topic.html", forum_id=forum_id)
 #-----------------------------------------------------------------------------------------
 #on the topic page:
 

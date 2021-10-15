@@ -2,11 +2,6 @@
 {% block content %}
 <div class="wrapper">
 {% if session.user_account %}
-<p>{{ session. user_account  }}.You are logged in.</p>
-<p>Welcome to the topic: </p>
-
-<h2>"{{title}}"</h2>
-<br>
 <div class="div_table">
     <form action= "{{ '/create/message/%d'%topic_id }}" > 
         <button type="submit">Create message </button>
@@ -15,6 +10,12 @@
         <button type="submit">Remove topic </button>
     </form>
 </div>
+<br>
+<!-- <p>{{ session. user_account  }}.You are logged in.</p> -->
+<p>Welcome to the topic: </p>
+
+<h2>"{{title}}"</h2>
+
 <br>
 
 <h4>Messages:</h4>
@@ -47,7 +48,7 @@
     </div>
 
 
-    back to <a href="{{ '/forum/%s'%forum_id }}"> {{theme}} </a>
+    Back -><a href="{{ '/forum/%s'%forum_id }}"> {{theme}} </a>
 {% endif %}
 </div>
 {% endblock %}

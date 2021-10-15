@@ -13,6 +13,9 @@ body{
     margin-left: auto;
     margin-right: auto;
   }
+.bar{
+    background-color: rgba(172, 119, 172, 0.993);
+}
 .vessel {/*form,message,topic */
     padding: 4em 2em;
     background: white;
@@ -118,6 +121,25 @@ table {
 form{
     display: inline;
 }
-
-
+/* for all login pages */
+.content{
+    max-width: 27em;
+    background: white;
+    padding: 2em 2em;
+    border-radius: .5em;
+    left :50%;
+    position:absolute;
+    transform: translate(-50%);
+    }
+.create_form     {
+    zoom: 125%;
+    padding: 1em;
+    background: PapayaWhip;
+    display: grid;
+    max-width: 15em;
+    border-radius: .5em;
+    grid-template-columns: 5em 10em;
+    grid-row-gap: .5em;
+    } 
+    
 

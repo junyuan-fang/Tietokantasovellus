@@ -2,28 +2,8 @@
 {% block content %}
 {% if session.user_account %}
 <style>
-    .content{
-    position:absolute;
 
-    left :50%;
-    max-width: 22em;
-    background: white;
-    padding: 2em 2em;
-    border-radius: .5em;
-    transform: translate(-50%);
-    }
-    form {
-    zoom: 125%;
-    float: left;
-    text-align: center;
-    padding: 1em;
-    background: PapayaWhip;
-    display: grid;
-    max-width: 15em;
-    border-radius: .5em;
-    grid-template-columns: 5em 10em;
-    grid-row-gap: .5em;
-    }  
+
     form label {
     margin: 0  auto auto 0;
     }
@@ -32,13 +12,13 @@
     }
     
 
-    </style>
+</style>
 
 
 
 
 <div class="content">
-<form autocomplete="off" action="{{ '/create/topic/%s'%forum_id }}" method="POST">
+<form class= "create_form" autocomplete="off" action="{{ '/create/topic/%s'%forum_id }}" method="POST">
     <label>Topic:</label>
     <input type="text" name="topic">
     <label>Message:</label>
@@ -46,6 +26,7 @@
     <input id ="button" type="submit" value="Send">
     <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 </form>
+<--<a href="{{ '/forum/%s'%forum_id }}"> Back </a>
 </div>
 {% endif %}
 {% endblock %}

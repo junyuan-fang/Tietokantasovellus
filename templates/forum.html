@@ -1,11 +1,8 @@
 {% extends "layout.html" %}
 {% block content %}
+
 <div class="wrapper">
 {% if session.user_account %}
-<p>{{ session. user_account  }}.You are logged in.</p>
-<p>Welcome to the theme: </p>
-<h2>"{{theme}}"</h2>
-<br>
 <div class="div_table">
     <form action= "{{ '/create/topic/%d'%forum_id }}" > 
         <button type="submit">Create topic </button>
@@ -14,6 +11,11 @@
         <button type="submit">Remove forum </button>
     </form>
 </div>
+<br>
+<!-- <p>{{ session. user_account  }}.You are logged in.</p> -->
+<p>Welcome to the theme: </p>
+<h2>"{{theme}}"</h2>
+
 <br>
 
 <h4>Topic:</h4>
@@ -28,6 +30,8 @@
 
         </tr>
 
+
+
         {% for topic in topics %}
         <tr>
         {% if topic.visibility==True%}
@@ -36,8 +40,9 @@
         <td>{{ topic.num}}</td>
         {% endif%}
         </tr>
-
         {% endfor %}
+
+
 
     </table>
         
@@ -46,7 +51,7 @@
 
 
 
-    <a href="/">back to home page </a>
+    Back -> <a href="/">home page </a>
 {% endif %}
 </div>
 {% endblock %}

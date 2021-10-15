@@ -5,9 +5,19 @@
 
 <div class="wrapper">
     {% if session.user_account %}
-    <p>{{ session. user_account }}.You are logged in.</p>
-    <a href="/create_forum">Click here</a> to create your own forum.
-    <h2>Form:</h2>
+    <!-- <p>{{ session. user_account }}.You are logged in.</p> -->
+    <div class="div_table">
+        <form action= "/create_forum" > 
+            <button type="submit"> Create forum </button>
+        </form>
+        <form action = "/search_messages">
+            <button type = "submit"> Search messages</button>
+        </form>
+    </div>
+
+
+    <br>
+    <h2>Forum:</h2>
     <div class="vessel">
     <table>
 
@@ -21,18 +31,29 @@
 
         </tr>
 
+        
         {% for forum in forums %}
+
+        
         <tr>
         <td>{{forum.public}}</td>
         <td><a href= "{{ '/forum/%s'%forum.forum_id }}"%forum.forum_id>{{forum.theme}}</a></td>
-        <td>{{forum.topic_num}}</td>
-        <td>{{forum.message_num}}</td>
-        <td>{{forum.time_stamp.strftime("%Y-%m-%d %H:%M:%S")}}</td>
+
+        {%if forum.time_stamp is none%} 
+            <td>None</td>
+            <td>None</td>
+            <td>None</td>
+        {%else%}
+            <td>{{forum.topic_num}}</td>
+            <td>{{forum.message_num}}</td>
+            <td>{{forum.time_stamp.strftime("%Y-%m-%d %H:%M:%S")}}</td>
+        {%endif%}
+         
 
         </tr>
 
         {% endfor %}
-
+        
     </table>
         
     </div>
