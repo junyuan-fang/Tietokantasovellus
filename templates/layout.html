@@ -8,10 +8,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 <body>
     <div class="header">
+        <a href="/">
         <div class= "inner_header"> 
                 <div class="logo_container">
                     <h1>Web<span>Chatting</span></h1>
         </div>
+        </a>
         {% if session.user_id %}
         <ul class="logged_in">
             <li><a href="/logout">Logout</a></li>

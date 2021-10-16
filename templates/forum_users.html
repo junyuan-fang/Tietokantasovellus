@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<div class="wrapper">
+Users in Forum
+<h2>"{{theme}}":</h2>
+{% if session.user_account %}
+<h>
+<div class="vessel">
+<table>
+    <tr>
+        <th>User_id</th>
+    </tr>
+    {% for user in users%}
+    <tr>
+        <td>{{ user.account }}</td>
+    </tr>
+    {% endfor %}
+
+</table>
+</div>
+<--<a href="{{ '/forum/%s'%forum_id }}"> Back </a>
+{% endif %}
+
+</div>
+
+{% endblock %}

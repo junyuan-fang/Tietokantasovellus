@@ -78,6 +78,10 @@ def searched_messages():
     querys= users.get_message_query(user_id,keyword)###
     return render_template("searched_messages.html", querys=querys)
 
+@app.route("/request_show")
+def show_requests():
+    pass
+    return render_template("request_show.html")
 #-----------------------------------------------------------------------------------------
 #on the forum page:
 
@@ -88,8 +92,9 @@ def forum(forum_id):
     #html can add topics and can delete recent forum
     #get forum's topics
     theme=forums.get_theme(forum_id)
+    is_public=forums.is_public(forum_id)
     topics_list=forums.get_topics(forum_id)####
-    return render_template("forum.html", forum_id=forum_id ,theme=theme, topics=topics_list)
+    return render_template("forum.html", forum_id=forum_id ,theme=theme, topics=topics_list,is_public=is_public)
 
 #for deleting forums
 @app.route("/remove/forum/<int:forum_id>")
@@ -117,6 +122,14 @@ def create_topic(forum_id):
         else:#unknow problem
             return render_template("error.html", message = "Failed to create topic")
     return render_template("create_topic.html", forum_id=forum_id)
+
+#show users in this forum
+@app.route("/forum_users/<int:forum_id>")
+def forum_users(forum_id):
+    user_id=users.user_id()
+    users_list=forums.get_users(forum_id,user_id)
+    theme=forums.get_theme(forum_id)
+    return render_template("forum_users.html",users=users_list, theme=theme,forum_id=forum_id)
 #-----------------------------------------------------------------------------------------
 #on the topic page:
 

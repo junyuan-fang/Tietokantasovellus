@@ -1,0 +1,34 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="wrapper">
+<h2>Requests:</h2>
+<div class="vessel">
+<table>
+    <tr>
+        <th>User1 (Invite User2)</th>
+        <th>User2 (Invited by User1)</th>
+        <th>To Forum (theme)</th>
+        <th>Confirm</th>
+    </tr>
+    {% if not requests %}
+    <tr>
+        <th>None</th>
+        <th>None</th>
+        <th>None</th>
+        <th>None</th>
+    </tr>
+    {% else %}
+    {% for request in requests %}
+    <tr>
+        <th>  </th>
+        <th> </th>
+        <th> </th>
+        <th><a>Confirm</a>/<a>Reject</a> </th>
+    </tr>
+    {% endfor %}
+    {% endif %}
+</table>
+</div>
+Back -> <a href="/">Home page </a>
+</div>
+{% endblock %}

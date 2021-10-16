@@ -10,6 +10,13 @@
     <form action= "{{ '/remove/forum/%s'%forum_id }}"> 
         <button type="submit">Remove forum </button>
     </form>
+    {% if not is_public %}
+
+    <form action= "{{ '/forum_users/%s'%forum_id }}"> 
+        <button type="submit">Show users </button>
+    </form>
+
+    {% endif %}
 </div>
 <br>
 <!-- <p>{{ session. user_account  }}.You are logged in.</p> -->
