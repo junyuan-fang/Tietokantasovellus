@@ -19,7 +19,12 @@ def get_forum_id(topic_id):
     return forum_id
 
 def get_messages(topic_id):
-    sql = "SELECT M.message_id, M.topic_id, M.user_id, M.content, M.created_at, M.visibility FROM messages M WHERE M.topic_id=:topic_id ORDER BY M.created_at"
+    sql = """SELECT M.message_id, M.topic_id, U.account, M.content, M.created_at, M.visibility 
+            FROM messages M
+            INNER JOIN users U
+            ON U.user_id=M.user_id
+            WHERE M.topic_id=:topic_id 
+            ORDER BY M.created_at"""
     result = db.session.execute(sql, {"topic_id": topic_id})
     return result.fetchall()
 

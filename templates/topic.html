@@ -35,7 +35,7 @@
         <tr>
         {% if message.visibility==True%}
         <td>{{ message.message_id }}</a></td>
-        <td>{{ message.user_id }}</td>
+        <td>{{ message.account }}</td>
         <td>{{ message.content }}</td>
         <td>{{ message.created_at.strftime("%Y-%m-%d %H:%M:%S")}}</td>
         {% endif%}

@@ -1,7 +1,46 @@
 {% extends "layout.html" %}
 {% block content %}
 {% if session.user_account %}
-<h3>Results of query</h3>
+<div class="wrapper">
+<h3>Related messages are:</h3>
+    <div class="vessel">
+    <table>
+        <tr>
+            <th>User id</th>
+            <th>Message</th>
+            <th>Sent at</th>
+            <th>Forum/Theme</th>
+            <th>public</th>
+            <th>Topic/Title</th>
+            
+        </tr>
+        
+        {% if not querys %}
+        <tr>
+            <td>None</td>
+            <td>None</td>
+            <td>None</td>
+            <td>None</td>
+            <td>None</td>
+        </tr>
 
+        {% else %}
+            {% for query in querys%}
+        <tr>
+            <td>{{query.account}}</td>
+            <td>{{query.content}}</td>
+            <td>{{query.created_at.strftime("%Y-%m-%d %H:%M:%S")}}</td>
+            <td>{{query.theme}}</td>
+            <td>{{query.public}}</td>
+            <td>{{query.title}}</td>
+            
+        </tr>
+            {% endfor %}
+        {% endif %}
+        
+    </table>
+    </div>
+    Back -> <a href="/">home page </a>
+</div>
 {% endif %}
 {% endblock %}

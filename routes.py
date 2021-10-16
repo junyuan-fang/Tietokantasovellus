@@ -67,18 +67,16 @@ def create_forum():
         else:
             return render_template("error.html", message = "Registration failed")
 
-@app.route("/search_messages", methods=["GET", "POST"])#######################
+@app.route("/search_messages")#######################
 def search_messages():
-    if request.method=="POST":
-        if session["csrf_token"] != request.form["csrf_token"]:
-            abort(403)
-        return render_template("searched_messages.html")
-
     return render_template("search_messages.html")
 
 @app.route("/searched_messages")
 def searched_messages():
-    return render_template("searched_messages.html")
+    user_id=users.user_id()
+    keyword=request.args["keyword"]
+    querys= users.get_message_query(user_id,keyword)###
+    return render_template("searched_messages.html", querys=querys)
 
 #-----------------------------------------------------------------------------------------
 #on the forum page:

@@ -29,18 +29,24 @@
         <th>Messages</th>
 
         </tr>
+        {% if not topics%}
+            <tr>
+            <td>None</td>
+            <td>None</td>
+            <td>None</td>
+            </tr>
+        {% else %}
+            {% for topic in topics %}
+            <tr>
+            {% if topic.visibility==True%}
+            <td><a href= "{{ '/topic/%s'%topic.topic_id }}"%topic.topic_id>{{topic.topic_id}}</a></td>
+            <td><a href= "{{ '/topic/%s'%topic.topic_id }}"%topic.topic_id>{{topic.title}}</td>
+            <td>{{ topic.num}}</td>
+            {% endif%}
+            </tr>
+            {% endfor %}
+        {% endif %}
 
-
-
-        {% for topic in topics %}
-        <tr>
-        {% if topic.visibility==True%}
-        <td><a href= "{{ '/topic/%s'%topic.topic_id }}"%topic.topic_id>{{topic.topic_id}}</a></td>
-        <td><a href= "{{ '/topic/%s'%topic.topic_id }}"%topic.topic_id>{{topic.title}}</td>
-        <td>{{ topic.num}}</td>
-        {% endif%}
-        </tr>
-        {% endfor %}
 
 
 
