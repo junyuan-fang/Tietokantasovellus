@@ -16,6 +16,9 @@
         <button type="submit">Show users </button>
     </form>
 
+    <form action= "{{ '/forum_add_users/%s'%forum_id }}"> 
+        <button type="submit">Invite user to "{{theme}}" </button>
+    </form>
     {% endif %}
 </div>
 <br>

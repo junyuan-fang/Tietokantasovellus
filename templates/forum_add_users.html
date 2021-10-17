@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<div class="wrapper">
+{% if session.user_account %}
+
+<div class="content">
+    <form class= "create_form" autocomplete="off" action="{{ '/forum_add_users/%s'%forum_id }}" method="POST">
+        <label>Add user:</label>
+        <input type="text" name="user_account" placeholder="User_id">
+        <input id ="button" type="submit" value="Send">
+        <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+    </form>
+
+
+
+
+    Back ->Forum"<a href="{{ '/forum/%s'%forum_id }}"> {{theme}} </a>"
+{% endif %}
+</div>
+{% endblock %}
+
+

@@ -1,5 +1,5 @@
 from app import app
-import users, forums, topics
+import users, forums, topics, requests
 from flask import request, render_template, redirect, session, abort
 
 @app.route("/")
@@ -127,9 +127,37 @@ def create_topic(forum_id):
 @app.route("/forum_users/<int:forum_id>")
 def forum_users(forum_id):
     user_id=users.user_id()
-    users_list=forums.get_users(forum_id,user_id)
+    users_list=forums.get_users(forum_id)
     theme=forums.get_theme(forum_id)
     return render_template("forum_users.html",users=users_list, theme=theme,forum_id=forum_id)
+
+@app.route("/forum_add_users/<int:forum_id>", methods=["GET", "POST"])
+def forum_add_user(forum_id):
+    theme=forums.get_theme(forum_id)
+    if request.method=="POST":
+        if session["csrf_token"] != request.form["csrf_token"]:
+            abort(403)
+        user_account2=request.form["user_account"]#
+        if(users.get_user_id(user_account2)):
+            #if current user is thwe onwer, user will be added to forum.
+            #else if not user, the request will be added
+            user_id2=users.get_user_id(user_account2)[0]
+            user_id1=users.user_id()
+            if users.is_owner(user_id1,forum_id):
+                if users.user_addto_forum(user_id2,forum_id):
+                    return redirect(f"/forum/{forum_id}")
+                else:
+                    return render_template("error.html", message = f"Add {user_id2} to {forums.get_theme(forum_id)} failed")
+            else:
+                owner_id=forums.get_owner_id(forum_id)
+                if requests.add_request(user_id1,user_id2,forum_id, owner_id):
+                    return redirect(f"/forum/{forum_id}")
+                else:
+                    return render_template("error.html", message = "Create request failed")
+        else:
+            return render_template("error.html", message = f"User id {user_account2} not found")
+    return render_template("forum_add_users.html",forum_id=forum_id, theme=theme)
+
 #-----------------------------------------------------------------------------------------
 #on the topic page:
 

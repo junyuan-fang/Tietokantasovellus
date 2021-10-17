@@ -71,14 +71,22 @@ def is_public(forum_id):
     is_public=result.fetchone()[0]
     return is_public
 
-def get_users(forum_id,user_id):
+def get_users(forum_id):
     sql="""
         SELECT U.account
         FROM forums F, user_forum UF, users U
         WHERE F.forum_id=UF.forum_id AND UF.user_id=U.user_id
-            AND F.forum_id=:forum_id AND U.user_id=:user_id
+            AND F.forum_id=:forum_id
     """
-    result=db.session.execute(sql,{"forum_id":forum_id, "user_id":user_id})
+    result=db.session.execute(sql,{"forum_id":forum_id})
     return result.fetchall()
 
+def get_owner_id(forum_id):
+    sql="""
+        SELECT UF.user_id
+        FROM user_forum UF
+        WHERE UF.forum_id=:forum_id AND UF.isOwner=True
+        """
+    result=db.session.execute(sql,{"forum_id":forum_id})
+    return result.fetchone()[0]
 

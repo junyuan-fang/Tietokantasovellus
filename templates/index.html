@@ -5,7 +5,6 @@
 
 <div class="wrapper">
     {% if session.user_account %}
-    <!-- <p>{{ session. user_account }}.You are logged in.</p> -->
     <div class="div_table">
         <form action= "/create_forum" > 
             <button type="submit"> Create forum </button>
@@ -17,6 +16,7 @@
             <button type = "submit"> Show requests</button>
         </form>
     </div>
+    User "{{ session. user_account }}". You are logged in.
 
 
     <br>

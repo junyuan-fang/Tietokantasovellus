@@ -1,4 +1,5 @@
 from operator import truediv
+import re
 import secrets
 from flask.templating import render_template
 from db import db
@@ -129,3 +130,45 @@ def get_message_query(user_id,keyword):
         """
     result=db.session.execute(sql,{"user_id":user_id, "keyword": f"%{keyword}%"})
     return  result.fetchall()
+
+def user_in_forum(user_id, forum_id):
+    user_in_forum=False
+    sql= """SELECT UF.isOwner
+            FROM user_forum UF
+            WHERE UF.forum_id=:forum_id AND UF.user_id=:user_id
+        """
+    result=db.session.execute(sql,{"user_id":user_id, "forum_id":forum_id})
+    value=result.fetchone()
+    if value:
+        user_in_forum=True
+    return user_in_forum
+
+def is_owner(user_id, forum_id):
+    sql= """SELECT UF.isOwner
+            FROM user_forum UF
+            WHERE UF.forum_id=:forum_id AND UF.user_id=:user_id
+        """
+    result=db.session.execute(sql,{"user_id":user_id, "forum_id":forum_id})
+    value=result.fetchone()[0]
+    return value
+
+def user_addto_forum(user_id,forum_id):
+    # if error, then user might already in the forum
+    try:
+        sql="""INSERT INTO user_forum (user_id, forum_id, isOwner) VALUES (:user_id, :forum_id, False)"""
+        db.session.execute(sql,{"user_id":user_id, "forum_id":forum_id})
+        db.session.commit()
+        return True
+    except Exception as e:
+        print(e)
+        return False
+
+def get_user_id(user_account):
+    sql="""
+        SELECT U.user_id
+        FROM users U
+        WHERE U.account=:user_account
+        """
+    result=db.session.execute(sql,{"user_account":user_account})
+    value=result.fetchone()
+    return value
