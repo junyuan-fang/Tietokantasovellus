@@ -1,5 +1,5 @@
 # Keskustelusovellus  
-Sovelluksessa näkyy keskustelualueita, joista jokaisella on tietty aihe. Alueilla on keskusteluketjuja, joita muodostuvat viesteistä. Jokainen käyttäjä on peruskäyttäjä. Admin on Alueen kohtainen. Peruskäyttäjä voi luoda "private" tai "public" alueen. Peruskäyttääjä voi lisätä toinen peruskäyttäjä alueeseen, johon hän on liittynyt. Admin käyttäjä tulee vahvistaa pyyntöä etusivun kautta.
+Sovelluksessa näkyy keskustelualueita, joista jokaisella on tietty aihe. Alueilla on keskusteluketjuja, joita muodostuvat viesteistä. Jokainen käyttäjä on peruskäyttäjä. Admin on alueen kohtainen. Peruskäyttäjä voi luoda "private" tai "public" alueen. Peruskäyttäjä voi muodostaa pyynnön alueen adminille, lisätä toinen peruskäyttäjä alueeseen, johon hän on liittynyt. Admin käyttäjä tulee vahvistaa pyyntöä etusivun kautta.
 * Hierarkkiat:
  * Alue = Forum
  * Ketju = Topic
