@@ -20,10 +20,11 @@
     {% else %}
     {% for request in requests %}
     <tr>
-        <th>  </th>
-        <th> </th>
-        <th> </th>
-        <th><a>Confirm</a>/<a>Reject</a> </th>
+        <th> {{request.u1account}}</th>
+        <th> {{request.u2account}}</th>
+        <th> {{request.theme}}</th>
+        <th><a href="{{'/request/confirm/%s/%s/%s/%s'%(request.owner_id, request.user_id2, request.forum_id, request.request_id)}}">Confirm</a>
+            /<a href="{{'/request/delete/%s/%s'%(request.request_id, request.owner_id) }}">Reject</a> </th>
     </tr>
     {% endfor %}
     {% endif %}

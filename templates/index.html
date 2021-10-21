@@ -12,7 +12,7 @@
         <form action = "/search_messages">
             <button type = "submit"> Search messages</button>
         </form>
-        <form action = "/request_show">
+        <form action = "{{ '/request_show/%s'%user_id }}">
             <button type = "submit"> Show requests</button>
         </form>
     </div>

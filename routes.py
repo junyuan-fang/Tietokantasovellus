@@ -6,18 +6,17 @@ from flask import request, render_template, redirect, session, abort
 def index():
     if users.user_id()==0 :
         return redirect("welcome")
-    else:    
+    else:
+        user_id= users.user_id()   
         forums_list=users.get_forums(users.user_id())
-        return render_template("index.html",forums=forums_list)#, forums=forums_list
+        return render_template("index.html",forums=forums_list, user_id=user_id)
 
 @app.route("/welcome")
 def welcome():
     return render_template("welcome.html")
 
 @app.route("/login",methods=["GET","POST"])
-def login():
-    if request.method=="GET":
-        return render_template("login.html")
+def login():    
     if request.method == "POST":
         username= request.form["username"]
         passward= request.form["password"]
@@ -25,6 +24,7 @@ def login():
             return redirect("/")
         else:
             return render_template("error.html",message="Wrong username or password")
+    return render_template("login.html")
 
 @app.route("/logout")
 def logout():
@@ -33,10 +33,7 @@ def logout():
 
 @app.route("/register", methods = ["GET", "POST"])
 def register():
-    if request.method=="GET":
-        return render_template("register.html")
-    if request.method == "POST":
-        
+    if request.method == "POST": 
         username = request.form["username"]
         password1 = request.form["password1"]
         password2 = request.form["password2"]
@@ -48,13 +45,12 @@ def register():
             return redirect("/")
         else:#username exists
             return render_template("error.html", message = "Registration failed")
+    return render_template("register.html")
+    
  
 #create forum
 @app.route("/create_forum", methods = ["GET", "POST"])
 def create_forum():
-    
-    if request.method=="GET":   
-        return render_template("create_forum.html")
     if request.method=="POST":
         if session["csrf_token"] != request.form["csrf_token"]:
             abort(403)
@@ -65,9 +61,10 @@ def create_forum():
         if(forums.create_forum(theme,public_value)):
             return redirect("/")
         else:
-            return render_template("error.html", message = "Registration failed")
+            return render_template("error.html", message = "Registration failed")  
+    return render_template("create_forum.html")
 
-@app.route("/search_messages")#######################
+@app.route("/search_messages")
 def search_messages():
     return render_template("search_messages.html")
 
@@ -75,13 +72,31 @@ def search_messages():
 def searched_messages():
     user_id=users.user_id()
     keyword=request.args["keyword"]
-    querys= users.get_message_query(user_id,keyword)###
+    querys= users.get_message_query(user_id,keyword)
     return render_template("searched_messages.html", querys=querys)
 
-@app.route("/request_show")
-def show_requests():
-    pass
-    return render_template("request_show.html")
+@app.route("/request_show/<int:user_id>")
+def show_requests(user_id):
+    if  users.user_id()==user_id:#and is owner
+        request_list=requests.get_requests(user_id)
+        return render_template("request_show.html", requests=request_list)
+    else:
+        return render_template("error.html",message="No right to see the page")
+
+@app.route("/request/confirm/<int:owner_id>/<int:user_id2>/<int:forum_id>/<int:request_id>")
+def request_confirm(owner_id,user_id2,forum_id,request_id):
+    if users.user_addto_forum(user_id2,forum_id):
+        requests.remove_request(request_id)
+        return redirect(f"/request_show/{owner_id}")
+    else:
+        requests.remove_request(request_id)
+        return render_template("error.html",message="Confirmation failed")
+
+@app.route("/request/delete/<int:request_id>/<int:owner_id>")
+def request_delete(request_id,owner_id):
+    requests.remove_request(request_id)
+    return redirect(f"/request_show/{owner_id}")
+
 #-----------------------------------------------------------------------------------------
 #on the forum page:
 

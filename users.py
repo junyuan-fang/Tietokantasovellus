@@ -152,9 +152,24 @@ def is_owner(user_id, forum_id):
     value=result.fetchone()[0]
     return value
 
+def is_user_in_forum(user_id,forum_id):
+    value=False
+    sql="""
+    SELECT *
+    FROM user_forum UF
+    WHERE UF.user_id=:user_id AND UF.forum_id=:forum_id
+    """
+    result=db.session.execute(sql, {"user_id":user_id, "forum_id":forum_id})
+    if result.fetchone():
+        value=True
+    return value
+
+
 def user_addto_forum(user_id,forum_id):
     # if error, then user might already in the forum
     try:
+        if is_user_in_forum(user_id,forum_id):
+            raise Exception
         sql="""INSERT INTO user_forum (user_id, forum_id, isOwner) VALUES (:user_id, :forum_id, False)"""
         db.session.execute(sql,{"user_id":user_id, "forum_id":forum_id})
         db.session.commit()
