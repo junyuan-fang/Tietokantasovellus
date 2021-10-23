@@ -145,8 +145,8 @@ def edit_theme(forum_id):
     if users.is_owner(users.user_id(), forum_id):
         theme=forums.get_theme(forum_id)
         if request.method=="POST":
-            newtheme=request.form["theme"]
-            forums.edit_theme(forum_id,newtheme)
+            new_theme=request.form["theme"]
+            forums.edit_theme(forum_id,new_theme)
             return redirect(f"/forum/{forum_id}")
         return render_template("edit_theme.html", forum_id=forum_id, theme=theme)
         # return render_template()
@@ -205,13 +205,33 @@ def remove_forum_user(user_id,forum_id):
 #on the topic page:
 
 #Topic shows messages
-@app.route("/topic/<int:topic_id>", methods = ["GET", "POST"])
+@app.route("/topic/<int:topic_id>")
 def topic(topic_id):
     title= topics.get_title(topic_id)
     forum_id= topics.get_forum_id(topic_id)
     theme=forums.get_theme(forum_id)
     messages_list=topics.get_messages(topic_id)
-    return render_template("topic.html",title=title, topic_id=topic_id, messages=messages_list, forum_id=forum_id, theme=theme)
+    user_id=users.user_id()
+    is_owner=users.is_owner(user_id, forum_id)
+    is_topic_owner=users.is_topic_owner(user_id,topic_id)
+    return render_template("topic.html",title=title, topic_id=topic_id, messages=messages_list,\
+                             forum_id=forum_id, theme=theme, is_owner=is_owner, is_topic_owner=is_topic_owner )
+
+#edit title
+@app.route("/edit/title/<int:topic_id>", methods=["GET","POST"])
+def edit_title(topic_id):
+    forum_id= topics.get_forum_id(topic_id)
+    user_id=users.user_id()
+    is_owner=users.is_owner(user_id, forum_id)
+    is_topic_owner=users.is_topic_owner(user_id,topic_id)
+    if is_owner or is_topic_owner:
+        title= topics.get_title(topic_id)
+        if request.method=="POST":
+            new_title=request.form["title"]
+            topics.edit_title(topic_id,new_title)
+            return redirect(f"/topic/{topic_id}")
+        return render_template("edit_title.html", topic_id=topic_id, title=title)
+    return render_template("error.html", message="Permission denied" )
 
 #for deleting topics
 @app.route("/remove/topic/<int:topic_id>")
@@ -232,11 +252,7 @@ def create_message(topic_id):
         if message=="":
             return render_template("error.html", message= "Message can not be empty")
         if(topics.create_message(topic_id, message)):
-            title=topics.get_title(topic_id)
-            forum_id= topics.get_forum_id(topic_id)
-            theme=forums.get_theme(forum_id)
-            messages_list=topics.get_messages(topic_id)
-            return render_template("topic.html",title=title, topic_id=topic_id, messages=messages_list, forum_id=forum_id, theme=theme)
+            return redirect(f"/topic/{topic_id}")
         #unknow problem
         return render_template("error.html", message = "Failed to create topic")
         

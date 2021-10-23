@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+{% block content %}
+{% if session.user_account %}
+<style>
+
+
+    form label {
+    margin: 0  auto auto 0;
+    }
+    textarea {
+    width: 156px;
+    }
+    
+
+</style>
+
+
+
+
+<div class="edit">
+<div class="edit_inside">
+    New Topic for "{{title}}":
+<form class= "edit_form" autocomplete="on" action="{{ '/edit/title/%s'%topic_id }}" method="POST">
+    <label>Topic:</label>
+    <input  type="text" value="{{ '%s'%title }}" name="title">
+    <input id ="button" type="submit" value="Send">
+    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+</form>
+</div>
+<--<a href="{{ '/topic/%s'%topic_id }}"> Back </a>
+</div>
+{% endif %}
+{% endblock %}

@@ -50,6 +50,9 @@ def count_messages(topic_id):
     num=result.fetchone()[0]
     return num
 
-
+def edit_title(topic_id,title):
+    sql = "UPDATE topic SET title=:title WHERE topic_id=:topic_id"
+    db.session.execute(sql, { "title":title, "topic_id":topic_id })
+    db.session.commit()
 
     

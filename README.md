@@ -5,6 +5,7 @@ Sovelluksessa näkyy keskustelualueita, joista jokaisella on tietty aihe. Alueil
  * Ketju = Topic
  * Viesti = Message
 
+
 ## Sovelluksen ominaisuuksia:
 
 ### Etusivulla
@@ -26,10 +27,12 @@ Sovelluksessa näkyy keskustelualueita, joista jokaisella on tietty aihe. Alueil
 ### Alueella
 * Näkee  listalla "Topic id ", "Title" ja viestien määrä ✔️
 * Ketjun otsikon kautta pääsee kyseiselle ketjulle ✔️
-* Alueen omistaja pääsee muokkamaan alueen nimeä ✔️
 * Pääsee etusivulle takaisin. ✔️
 * "Create topic"
   * Voi luoda uuden ketjun antamalla ketjun otsikko ja aloitusviestin sisällön. Alueen luoja on admin ✔️
+* "Edit theme"
+  * Vain alueen luojalle ja Adminille näytetään tätä painiketta ✔️
+  * Vain alueen luoja ja admin pääsee muokkamaan alueen otsikkoa ✔️
 * "Remove forum"
   * Vain admin pääsee poistamaan alueen ✔️
     * Alueen poisto ✔️
@@ -46,14 +49,17 @@ Sovelluksessa näkyy keskustelualueita, joista jokaisella on tietty aihe. Alueil
 ### Ketjulla
 * Näkee  listalla "Message id","User id", "Content, "Sent at ✔️
 * Pääsee alueelle takaisin ✔️
-* Ketjun luoja pääsee muokkamaan ketjun otsikkoa ✖️️
 * Viestin kirjoittaja pääsee muokkamaan viestiä ✖️️
 * Admin ja viestin kirjoittaja pääsee poistamaan viestin ✖️️
 * "Create Message"
   * Voi kirjoittaa uuden viestin ketjulle ✔️
+* "Edit topic"
+  * Vain ketjun luojalle ja Adminille näytetään tätä painiketta ✔️
+  * Vain ketjun luoja ja admin pääsee muokkamaan ketjun ostikkoa ✔️
 * "Remove topic"
   * Vain ketjun luojalle ja Adminille näytetään tätä painiketta ✖️
   * Vain ketjun luoja ja Admin pääsee poistamaan alueen ✖️
+
 ### Muut toiminnot
 * "Rollback" toiminto "error" virheestä ✖️
 <!-- ### Sovelluksen jatkokehitykset

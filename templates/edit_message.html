@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+{% block content %}
+{% if session.user_account %}
+<style>
+
+ 
+    form label {
+    margin: 0  auto auto 0;
+    }
+    textarea {
+    width: 156px;
+    }
+    
+
+    </style>
+
+
+<div class="content">
+<form class="create_form" autocomplete="on" action="{{ '/edit/message/%s'%topic_id }}" method="POST">
+    <label>Message:</label>
+    <textarea name="message" rows="3" cols="40" maxlength="300" placeholder="The maximum number of characters are 300"></textarea>
+    <input id ="button" type="submit" value="Send">
+    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+</form>
+<--<a href="{{ '/topic/%s'%topic_id }}"> Back </a>
+</div>
+{% endif %}
+{% endblock %}

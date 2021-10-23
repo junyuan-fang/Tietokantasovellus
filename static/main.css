@@ -116,7 +116,8 @@ table td{
     background-color: white;
     border: white;
   }
-  .button_line p{
+  .right{
+    margin: 0.2em auto;
     float: right;
   }
   button{

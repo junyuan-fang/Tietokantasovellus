@@ -6,17 +6,21 @@
     <form action= "{{ '/create/message/%d'%topic_id }}" > 
         <button type="submit">Create message </button>
     </form>
-    <form action= "{{ '/remove/topic/%s'%topic_id }}"> 
-        <button type="submit">Remove topic </button>
+
+    {% if is_owner or is_topic_owner %}
+    <form action= "{{ '/edit/title/%s'%topic_id }}"> 
+        <button type="submit">Edit topic </button>
     </form>
     <form action= "{{ '/remove/topic/%s'%topic_id }}"> 
         <button type="submit">Remove topic </button>
     </form>
-    <p>Welcome to the topic: "{{title}}"</p>
+    {% endif %}
+
+    <p class = "right">Welcome to the topic: </p>
 </div>
 <!-- <p>{{ session. user_account  }}.You are logged in.</p> -->
 
-
+<p  class = "right">"{{title}}"</p>
 <h2>Messages:</h2>
 <div class="vessel">
 
