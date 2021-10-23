@@ -7,9 +7,14 @@
     <form action= "{{ '/create/topic/%d'%forum_id }}" > 
         <button type="submit">Create topic </button>
     </form>
+    {% if is_owner %}
     <form action= "{{ '/remove/forum/%s'%forum_id }}"> 
         <button type="submit">Remove forum </button>
     </form>
+    <form action= "{{ '/edit/theme/%s'%forum_id }}"> 
+        <button type="submit">Edit theme </button>
+    </form>
+    {% endif %}
     {% if not is_public %}
 
     <form action= "{{ '/forum_users/%s'%forum_id }}"> 
@@ -24,7 +29,7 @@
 <br>
 <!-- <p>{{ session. user_account  }}.You are logged in.</p> -->
 <p>Welcome to the theme: </p>
-<h2>"{{theme}}"</h2>
+<h2>"{{theme}}"</h2> 
 
 <br>
 

@@ -85,7 +85,7 @@ def show_requests(user_id):
 
 @app.route("/request/confirm/<int:owner_id>/<int:user_id2>/<int:forum_id>/<int:request_id>")
 def request_confirm(owner_id,user_id2,forum_id,request_id):
-    if users.user_addto_forum(user_id2,forum_id):
+    if requests.confirm_request(user_id2,forum_id):
         requests.remove_request(request_id)
         return redirect(f"/request_show/{owner_id}")
     else:
@@ -109,13 +109,16 @@ def forum(forum_id):
     theme=forums.get_theme(forum_id)
     is_public=forums.is_public(forum_id)
     topics_list=forums.get_topics(forum_id)####
-    return render_template("forum.html", forum_id=forum_id ,theme=theme, topics=topics_list,is_public=is_public)
+    is_owner=users.is_owner(users.user_id(),forum_id)
+    return render_template("forum.html", forum_id=forum_id ,theme=theme, topics=topics_list,is_public=is_public,is_owner=is_owner)
 
 #for deleting forums
 @app.route("/remove/forum/<int:forum_id>")
 def remove_forum(forum_id):
-    forums.remove_forum(forum_id)
-    return redirect("/")
+    if users.is_owner(users.user_id(), forum_id):
+        forums.remove_forum(forum_id)#recursively
+        return redirect("/")
+    return render_template("error.html",message=f"You do not have permission to remove '{forums.get_theme(forum_id)}' ")
 
 #create topics
 @app.route("/create/topic/<int:forum_id>", methods = ["GET", "POST"])
@@ -130,48 +133,73 @@ def create_topic(forum_id):
             return render_template("error.html", message= "Message can not be empty")
         if topic=="":
             return render_template("error.html", message= "Topic can not be empty")
-        if(forums.create_topic(topic, initial_message, forum_id)):##
-            theme=forums.get_theme(forum_id)##
-            topics_list=forums.get_topics(forum_id)##
-            return render_template("/forum.html",forum_id=forum_id ,theme=theme, topics=topics_list)##
-        else:#unknow problem
-            return render_template("error.html", message = "Failed to create topic")
+        if(forums.create_topic(topic, initial_message, forum_id)):
+            return redirect(f"/forum/{forum_id}")
+        #unknow problem
+        return render_template("error.html", message = "Failed to create topic")
     return render_template("create_topic.html", forum_id=forum_id)
+
+#edit theme
+@app.route("/edit/theme/<int:forum_id>", methods=["GET","POST"])
+def edit_theme(forum_id):
+    if users.is_owner(users.user_id(), forum_id):
+        theme=forums.get_theme(forum_id)
+        if request.method=="POST":
+            newtheme=request.form["theme"]
+            forums.edit_theme(forum_id,newtheme)
+            return redirect(f"/forum/{forum_id}")
+        return render_template("edit_theme.html", forum_id=forum_id, theme=theme)
+        # return render_template()
+    return render_template("error.html", message="Permission denied" )
+
 
 #show users in this forum
 @app.route("/forum_users/<int:forum_id>")
 def forum_users(forum_id):
     user_id=users.user_id()
+    is_owner=users.is_owner(user_id,forum_id)  
     users_list=forums.get_users(forum_id)
     theme=forums.get_theme(forum_id)
-    return render_template("forum_users.html",users=users_list, theme=theme,forum_id=forum_id)
+    return render_template("forum_users.html",users=users_list, theme=theme,forum_id=forum_id,is_owner=is_owner,user_id=user_id)
 
+#incude making a request
 @app.route("/forum_add_users/<int:forum_id>", methods=["GET", "POST"])
 def forum_add_user(forum_id):
     theme=forums.get_theme(forum_id)
     if request.method=="POST":
         if session["csrf_token"] != request.form["csrf_token"]:
             abort(403)
-        user_account2=request.form["user_account"]#
-        if(users.get_user_id(user_account2)):
-            #if current user is thwe onwer, user will be added to forum.
+        user_account2=request.form["user_account"]
+        if users.get_user_id(user_account2):
+            #if current user is the onwer, user will be added to forum.
             #else if not user, the request will be added
             user_id2=users.get_user_id(user_account2)[0]
             user_id1=users.user_id()
             if users.is_owner(user_id1,forum_id):
-                if users.user_addto_forum(user_id2,forum_id):
+                if requests.confirm_request(user_id2,forum_id):
                     return redirect(f"/forum/{forum_id}")
-                else:
-                    return render_template("error.html", message = f"Add {user_id2} to {forums.get_theme(forum_id)} failed")
-            else:
-                owner_id=forums.get_owner_id(forum_id)
-                if requests.add_request(user_id1,user_id2,forum_id, owner_id):
-                    return redirect(f"/forum/{forum_id}")
-                else:
-                    return render_template("error.html", message = "Create request failed")
-        else:
-            return render_template("error.html", message = f"User id {user_account2} not found")
+                #else
+                return render_template("error.html", message = f"Add {user_account2} to {forums.get_theme(forum_id)} failed")
+            #request will be added, because not owner
+            owner_id=forums.get_owner_id(forum_id)
+            if users.user_in_forum(user_id2,forum_id):
+                return render_template("error.html", message = f"User {user_account2} is already in the {theme}")
+            if requests.add_request(user_id1,user_id2,forum_id, owner_id):
+                return redirect(f"/forum/{forum_id}")
+            #for example, same request found
+            return render_template("error.html", message = "Create request failed")
+        #user2 not found
+        return render_template("error.html", message = f"User id {user_account2} not found")
     return render_template("forum_add_users.html",forum_id=forum_id, theme=theme)
+
+@app.route("/remove/forum_user/<int:user_id>/<int:forum_id>")
+def remove_forum_user(user_id,forum_id):
+    if user_id==forums.get_owner_id(forum_id):
+        return render_template("error.html", message="Owner can not be deleted")
+    if users.is_owner(users.user_id(), forum_id):
+        forums.remove_user_from_forum(user_id,forum_id)
+        return redirect(f"/forum_users/{forum_id}")
+    return render_template("error.html", message="Permission denied" )
 
 #-----------------------------------------------------------------------------------------
 #on the topic page:
@@ -190,10 +218,7 @@ def topic(topic_id):
 def remove_topic(topic_id):
     topics.remove_topic(topic_id)
     forum_id= topics.get_forum_id(topic_id)
-    theme=forums.get_theme(forum_id)
-    topics_list=forums.get_topics(forum_id)##
-
-    return render_template("/forum.html",forum_id=forum_id ,theme=theme, topics=topics_list)## messages num
+    return redirect(f"/forum/{forum_id}")
 
 #create message in topic    
 @app.route("/create/message/<int:topic_id>", methods = ["GET", "POST"])
@@ -204,7 +229,6 @@ def create_message(topic_id):
         if session["csrf_token"] != request.form["csrf_token"]:
             abort(403)
         message = request.form["message"]
-        
         if message=="":
             return render_template("error.html", message= "Message can not be empty")
         if(topics.create_message(topic_id, message)):
@@ -213,8 +237,8 @@ def create_message(topic_id):
             theme=forums.get_theme(forum_id)
             messages_list=topics.get_messages(topic_id)
             return render_template("topic.html",title=title, topic_id=topic_id, messages=messages_list, forum_id=forum_id, theme=theme)
-        else:#unknow problem
-            return render_template("error.html", message = "Failed to create topic")
+        #unknow problem
+        return render_template("error.html", message = "Failed to create topic")
         
 #-----------------------------------------------------------------------------------------
 #  delete message

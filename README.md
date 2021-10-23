@@ -20,36 +20,45 @@ Sovelluksessa näkyy keskustelualueita, joista jokaisella on tietty aihe. Alueil
   * Navigointi suoraan alueseen ✔️
 * "Show requests" 
   * Tämä painike näkyy, jos hän on joku alueen Admin :heavy_check_mark:
-  * Alueen kohtainen Admin käyttäjä voi vahvistaa tai hylkää pyyntöä ✖️
-  * Pyyntö on muodossa: "User1" want add "User2" to private "Forum". ✖️
+  * Alueen kohtainen Admin käyttäjä voi vahvistaa tai hylkää pyyntöä ✔️
+  * Pyyntö on muodossa: "User1" want add "User2" to private "Forum". ✔️
   * Navigointi suoraan alueseen ✔️
 ### Alueella
 * Näkee  listalla "Topic id ", "Title" ja viestien määrä ✔️
 * Ketjun otsikon kautta pääsee kyseiselle ketjulle ✔️
+* Alueen omistaja pääsee muokkamaan alueen nimeä ✖️
 * Pääsee etusivulle takaisin. ✔️
 * "Create topic"
   * Voi luoda uuden ketjun antamalla ketjun otsikko ja aloitusviestin sisällön. Alueen luoja on admin ✔️
 * "Remove forum"
-  * Vain admin pääsee poistamaan alueen ✖️
+  * Vain admin pääsee poistamaan alueen ✔️
+    * Alueen poisto ✔️
+    * Ketjun poisto ✔️
+    * Viestin poisto ✔️
+    * Pyynnön poisto ✔️
 * "Show users"
   * Näyttää kaikki Alueen osallistujat ✔️
+  * Admin voi poistaa Alueen osallistuja ✔️
+  * Admin pääsee "Invite user" sivulle ✔️
 * "Invite user"
-  * Muodosta "Request" viestin alueen Adminille.✖️
+  * Muodosta "Request" viestin alueen Adminille.✔️
   * "Users not in forum"
-   * Näyttää käyttäjät, jotka ei ole alueessa vielä ✖️
 ### Ketjulla
 * Näkee  listalla "Message id","User id", "Content, "Sent at ✔️
-* Pääsee alueelle takaisin ✔️mark: 
+* Pääsee alueelle takaisin ✔️
+* Ketjun luoja pääsee muokkamaan ketjun otsikkoa ✖️️
 * Viestin kirjoittaja pääsee muokkamaan viestiä ✖️️
-* Admin, ketjun luoja ja viestin kirjoittaja pääsee poistamaan viestin ✖️️
+* Admin ja viestin kirjoittaja pääsee poistamaan viestin ✖️️
 * "Create Message"
   * Voi kirjoittaa uuden viestin ketjulle ✔️
 * "Remove topic"
   * Vain ketjun luojalle ja Adminille näytetään tätä painiketta ✖️
   * Vain ketjun luoja ja Admin pääsee poistamaan alueen ✖️
-    
+### Muut toiminnot
+* "Rollback" toiminto "error" virheestä ✖️
+<!-- ### Sovelluksen jatkokehitykset
+*  -->
 ***
-
 
 
 #### Nykyinen tilanne（26.09.2021）:

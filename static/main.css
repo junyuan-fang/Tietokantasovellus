@@ -141,5 +141,29 @@ form{
     grid-template-columns: 5em 10em;
     grid-row-gap: .5em;
     } 
+/* for all edit pages */
+.edit{
+    max-width: 27em;
+    background: white;
+    padding: 2em 2em;
+    border-radius: .5em;
+    left :50%;
+    position:absolute;
+    transform: translate(-50%);
+    }
+.edit_inside{
+    overflow-wrap: break-word;
+    zoom: 125%;
+    max-width: 15em;
+    padding: 1em;
+    background: PapayaWhip;
+}
+.edit_form     {
+    display: grid;
+    max-width: 15em;
+    border-radius: .5em;
+    grid-template-columns: 5em 10em;
+    grid-row-gap: .5em;
+    } 
     
 

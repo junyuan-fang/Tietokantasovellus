@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+{% block content %}
+{% if session.user_account %}
+<style>
+
+
+    form label {
+    margin: 0  auto auto 0;
+    }
+    textarea {
+    width: 156px;
+    }
+    
+
+</style>
+
+
+
+
+<div class="edit">
+<div class="edit_inside">
+    New theme for "{{theme}}":
+<form class= "edit_form" autocomplete="on" action="{{ '/edit/theme/%s'%forum_id }}" method="POST">
+    <label>Theme:</label>
+    <input  type="text" value="{{ '%s'%theme }}" name="theme">
+    <input id ="button" type="submit" value="Send">
+    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+</form>
+</div>
+<--<a href="{{ '/forum/%s'%forum_id }}"> Back </a>
+</div>
+{% endif %}
+{% endblock %}

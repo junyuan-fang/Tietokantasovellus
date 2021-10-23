@@ -2,6 +2,12 @@
 {% block content %}
 
 <div class="wrapper">
+    
+    <div class="div_table">
+        <form action= "{{ '/forum_add_users/%s'%forum_id }}"> 
+            <button type="submit">Invite user to "{{theme}}" </button>
+        </form>
+    </div>
 Users in Forum
 <h2>"{{theme}}":</h2>
 {% if session.user_account %}
@@ -10,10 +16,20 @@ Users in Forum
 <table>
     <tr>
         <th>User_id</th>
+        {% if is_owner %}
+        <th>Rmove user from "{{theme}}"</th>
+        {% endif %}
     </tr>
     {% for user in users%}
     <tr>
         <td>{{ user.account }}</td>
+        {% if is_owner %}
+        {% if user_id != user.user_id%}
+        <td><a href="{{'/remove/forum_user/%s/%s'% (user.user_id, forum_id)}}" >Remove </a></td>
+        {% else%}
+        <td>Owner can not be removed</td>
+        {% endif %}
+        {% endif %}
     </tr>
     {% endfor %}
 

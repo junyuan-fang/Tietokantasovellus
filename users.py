@@ -51,11 +51,11 @@ def get_forums(user_id):
     INNER JOIN users U ON U.user_id=UF.user_id
     INNER JOIN 
 
-    (SELECT F.forum_id AS forum_id, F.theme AS theme, F.public, COUNT( TT.topic_id) AS topic_num, SUM(TT.message_num) AS message_num, MAX(TT.time_stamp) AS time_stamp
+    (SELECT F.visibility AS visibility, F.forum_id AS forum_id, F.theme AS theme, F.public, COUNT( TT.topic_id) AS topic_num, SUM(TT.message_num) AS message_num, MAX(TT.time_stamp) AS time_stamp
     FROM forums F
     LEFT JOIN
 
-    (SELECT T.topic_id AS topic_id, T.title, T.forum_id AS forum_id, COUNT(M.topic_id) AS message_num, MAX(M.created_at) AS time_stamp
+    (SELECT  T.topic_id AS topic_id, T.title, T.forum_id AS forum_id, COUNT(M.topic_id) AS message_num, MAX(M.created_at) AS time_stamp
     FROM topic T 
     LEFT JOIN messages M ON M.topic_id=T.topic_id 
     WHERE T.visibility=True AND M.visibility=True GROUP BY T.topic_id) AS TT
@@ -63,56 +63,11 @@ def get_forums(user_id):
      ON F.forum_id=TT.forum_id AND F.visibility=True
      GROUP BY F.forum_id) AS FT
 
-     on FT.forum_id=UF.forum_id
+     on FT.forum_id=UF.forum_id AND FT.visibility=True
      WHERE U.user_id=:user_id or FT.public=True
      ORDER BY FT.time_stamp DESC"""
-    #  sql="""SELECT  FT.public public, FT.theme theme, FT.topic_num topic_num, FT.message_num message_num, FT.time_stamp time_stamp, FT.forum_id forum_id
-    # FROM user_forum UF
-    # INNER JOIN users U on U.user_id=UF.user_id
-    # INNER JOIN 
-
-    # (SELECT F.forum_id AS forum_id, F.theme AS theme, F.public, COUNT( TT.topic_id) AS topic_num, SUM(TT.message_num) AS message_num, MAX(TT.time_stamp) AS time_stamp
-    # FROM forums F
-    # INNER JOIN
-    # (SELECT T.topic_id AS topic_id, T.title, T.forum_id AS forum_id, COUNT(*) AS message_num, MAX(M.created_at) AS time_stamp
-    # FROM topic T 
-    # INNER JOIN messages M ON M.topic_id=T.topic_id 
-    # WHERE T.visibility=True AND M.visibility=True GROUP BY T.topic_id) AS TT
-    #  ON F.forum_id=TT.forum_id AND F.visibility=True
-    #  GROUP BY F.forum_id) AS FT
-
-    #  on FT.forum_id=UF.forum_id
-
-    #  WHERE U.user_id=:user_id or FT.public=True
-
-    #  ORDER BY FT.time_stamp DESC"""
     result = db.session.execute(sql, {"user_id": user_id})
     return result.fetchall()
-
-
-
-
-
-    # """SELECT FT.theme, FT.public, FT.topic_num, FT.message_num, FT.time_stamp
-    # FROM user_forum UF
-    # INNER JOIN users U on U.user_id=UF.user_id
-    # INNER JOIN 
-
-    # (SELECT F.forum_id AS forum_id, F.theme AS theme, F.public, COUNT( TT.topic_id) AS topic_num, SUM(TT.message_num) AS message_num, MAX(TT.time_stamp) AS time_stamp
-    # FROM forums F
-    # INNER JOIN
-    # (SELECT T.topic_id AS topic_id, T.title, T.forum_id AS forum_id, COUNT(*) AS message_num, MAX(M.created_at) AS time_stamp
-    # FROM topic T 
-    # INNER JOIN messages M ON M.topic_id=T.topic_id 
-    # WHERE T.visibility=True AND M.visibility=True GROUP BY T.topic_id) AS TT
-    #  ON F.forum_id=TT.forum_id AND F.visibility=True
-    #  GROUP BY F.forum_id) AS FT
-
-    #  on FT.forum_id=UF.forum_id
-
-    #  WHERE U.user_id=3 or FT.public=True
-
-    #  ORDER BY FT.time_stamp DESC"""
 
 def get_message_query(user_id,keyword):
     sql="""
@@ -149,34 +104,33 @@ def is_owner(user_id, forum_id):
             WHERE UF.forum_id=:forum_id AND UF.user_id=:user_id
         """
     result=db.session.execute(sql,{"user_id":user_id, "forum_id":forum_id})
-    value=result.fetchone()[0]
-    return value
+    value=result.fetchone()
+    if value:
+        return value[0]
+    return False
 
-def is_user_in_forum(user_id,forum_id):
-    value=False
-    sql="""
-    SELECT *
-    FROM user_forum UF
-    WHERE UF.user_id=:user_id AND UF.forum_id=:forum_id
-    """
-    result=db.session.execute(sql, {"user_id":user_id, "forum_id":forum_id})
-    if result.fetchone():
-        value=True
-    return value
-
-
-def user_addto_forum(user_id,forum_id):
-    # if error, then user might already in the forum
-    try:
-        if is_user_in_forum(user_id,forum_id):
-            raise Exception
-        sql="""INSERT INTO user_forum (user_id, forum_id, isOwner) VALUES (:user_id, :forum_id, False)"""
-        db.session.execute(sql,{"user_id":user_id, "forum_id":forum_id})
-        db.session.commit()
+def is_topic_owner(user_id, topic_id):
+    sql= """SELECT T.user_id
+            FROM topic T
+            WHERE T.topic_id=:topic_id AND T.user_id=:user_id
+        """
+    result=db.session.execute(sql,{"user_id":user_id, "topic_id":topic_id})
+    value=result.fetchone()
+    if value:
         return True
-    except Exception as e:
-        print(e)
-        return False
+    return False
+
+def is_message_owner(user_id, message_id):
+    sql= """SELECT M.user_id
+            FROM message M
+            WHERE M.message_id=:message_id AND M.user_id=:user_id
+        """
+    result=db.session.execute(sql,{"user_id":user_id, "message_id":message_id})
+    value=result.fetchone()
+    if value:
+        return True
+    return False
+
 
 def get_user_id(user_account):
     sql="""
@@ -187,3 +141,5 @@ def get_user_id(user_account):
     result=db.session.execute(sql,{"user_account":user_account})
     value=result.fetchone()
     return value
+
+

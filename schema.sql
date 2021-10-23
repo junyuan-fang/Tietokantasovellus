@@ -54,10 +54,9 @@ CREATE TABLE request (
     user_id2 INTEGER ,
     forum_id INTEGER ,
     owner_id INTEGER ,
-    visibility BOOLEAN NOT NULL,
     PRIMARY KEY( user_id1, user_id2, forum_id, owner_id),
-    FOREIGN KEY (user_id1) REFERENCES users ON DELETE NO ACTION,
-    FOREIGN KEY (user_id2) REFERENCES users ON DELETE CASCADE,
-    FOREIGN KEY (forum_id) REFERENCES forums ON DELETE CASCADE,
-    FOREIGN KEY (owner_id) REFERENCES users ON DELETE CASCADE 
+    FOREIGN KEY (user_id1) REFERENCES users,
+    FOREIGN KEY (user_id2) REFERENCES users,
+    FOREIGN KEY (forum_id) REFERENCES forums,
+    FOREIGN KEY (owner_id) REFERENCES users  
 );

@@ -1,8 +1,5 @@
-from operator import truediv
-import secrets
-from flask.templating import render_template
+from flask import session
 from db import db
-from flask import session,request
 #hadle two tables, which are "Forum" and "user_forum" 
 def create_forum(theme, public_value):
     try:
@@ -16,13 +13,32 @@ def create_forum(theme, public_value):
         db.session.commit()
         return True
     except Exception as e:
-        print(e)
         return False
 
 def remove_forum(forum_id):
-    print(forum_id)
-    sql = "UPDATE forums SET visibility=FALSE WHERE forum_id=:id"
+    #remove forum
+    sql = "UPDATE forums SET visibility=False WHERE forum_id=:id"
     db.session.execute(sql, { "id":forum_id })
+    #remove user list
+    sql = "DELETE FROM user_forum WHERE forum_id=:forum_id"
+    db.session.execute(sql, { "forum_id":forum_id })
+    #remove topics
+    sql = """
+            UPDATE topic T 
+            SET visibility=False
+            FROM forums F
+            WHERE T.forum_id=:forum_id
+        """
+    db.session.execute(sql, { "forum_id":forum_id })
+    #remove messages
+    sql ="""
+            UPDATE messages M 
+            SET visibility=False
+            FROM topic T, forums F
+            WHERE M.topic_id=T.topic_id AND T.forum_id=:forum_id
+        """
+    db.session.execute(sql, { "forum_id":forum_id })
+
     db.session.commit()
 
 #return str
@@ -58,7 +74,6 @@ def create_topic(topic, initial_message, forum_id):
         return True
 
     except Exception as e:
-        print(e)
         return False
 
 def is_public(forum_id):
@@ -68,12 +83,12 @@ def is_public(forum_id):
         WHERE F.forum_id=:forum_id
     """
     result=db.session.execute(sql,{"forum_id":forum_id})
-    is_public=result.fetchone()[0]
-    return is_public
+    is_public_=result.fetchone()[0]
+    return is_public_
 
 def get_users(forum_id):
     sql="""
-        SELECT U.account
+        SELECT U.user_id, U.account
         FROM forums F, user_forum UF, users U
         WHERE F.forum_id=UF.forum_id AND UF.user_id=U.user_id
             AND F.forum_id=:forum_id
@@ -90,3 +105,12 @@ def get_owner_id(forum_id):
     result=db.session.execute(sql,{"forum_id":forum_id})
     return result.fetchone()[0]
 
+def remove_user_from_forum(user_id, forum_id):
+    sql = "DELETE FROM user_forum WHERE user_id=:user_id AND forum_id=:forum_id"
+    db.session.execute(sql, { "user_id":user_id,"forum_id":forum_id })
+    db.session.commit()
+
+def edit_theme(forum_id,theme):
+    sql = "UPDATE forums SET theme=:theme WHERE forum_id=:forum_id"
+    db.session.execute(sql, { "theme":theme, "forum_id":forum_id })
+    db.session.commit()
