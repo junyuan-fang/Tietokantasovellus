@@ -5,19 +5,18 @@
 
 <div class="wrapper">
     {% if session.user_account %}
-    <div class="div_table">
+    <div class="button_line">
         <form action= "/create_forum" > 
             <button type="submit"> Create forum </button>
-        </form>
-        <form action = "/search_messages">
-            <button type = "submit"> Search messages</button>
         </form>
         <form action = "{{ '/request_show/%s'%user_id }}">
             <button type = "submit"> Show requests</button>
         </form>
+        <form action = "/search_messages">
+            <button type = "submit"> Search messages</button>
+        </form>
     </div>
-    User "{{ session. user_account }}". You are logged in.
-
+    
 
     <br>
     <h2>Forum:</h2>
@@ -61,6 +60,7 @@
         
     </div>
 
+    User "{{ session. user_account }}". You are logged in.
 
     {% else %}
     <a class="link" href="/login">Sign in</a>

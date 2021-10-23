@@ -88,9 +88,13 @@ form #button:hover {
 }
 
 table {
+    overflow-wrap: break-word;
     font-size: 14px;
     width: 100%;
   }
+table td{
+    word-break:break-all
+}
   
   tr {
     background-color: #fff;
@@ -105,21 +109,31 @@ table {
     text-align: left;
   }
 
-  .div_table{
-      display: table;
-  }
 
+  .button_line{
+    width: 100%;
+
+    background-color: white;
+    border: white;
+  }
+  .button_line p{
+    float: right;
+  }
   button{
     padding:5px;
-    border: tan;
+    padding-left:13px;
+    padding-right:13px;
     font-size: 1em;
-    margin: auto 1.2em auto auto;
+    border:tan;
     background: white;
-    border-radius: .5em;
 } 
-
+    button:hover {
+    border:solid;
+    background: rgb(249, 249, 255);
+    color: rgba(160, 92, 160, 0.993);
+}
 form{
-    display: inline;
+    display: inline-block;
 }
 /* for all login pages */
 .content{

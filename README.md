@@ -26,7 +26,7 @@ Sovelluksessa näkyy keskustelualueita, joista jokaisella on tietty aihe. Alueil
 ### Alueella
 * Näkee  listalla "Topic id ", "Title" ja viestien määrä ✔️
 * Ketjun otsikon kautta pääsee kyseiselle ketjulle ✔️
-* Alueen omistaja pääsee muokkamaan alueen nimeä ✖️
+* Alueen omistaja pääsee muokkamaan alueen nimeä ✔️
 * Pääsee etusivulle takaisin. ✔️
 * "Create topic"
   * Voi luoda uuden ketjun antamalla ketjun otsikko ja aloitusviestin sisällön. Alueen luoja on admin ✔️

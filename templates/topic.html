@@ -2,7 +2,7 @@
 {% block content %}
 <div class="wrapper">
 {% if session.user_account %}
-<div class="div_table">
+<div class="button_line">
     <form action= "{{ '/create/message/%d'%topic_id }}" > 
         <button type="submit">Create message </button>
     </form>
@@ -12,17 +12,14 @@
     <form action= "{{ '/remove/topic/%s'%topic_id }}"> 
         <button type="submit">Remove topic </button>
     </form>
+    <p>Welcome to the topic: "{{title}}"</p>
 </div>
-<br>
 <!-- <p>{{ session. user_account  }}.You are logged in.</p> -->
-<p>Welcome to the topic: </p>
 
-<h2>"{{title}}"</h2>
 
-<br>
-
-<h4>Messages:</h4>
+<h2>Messages:</h2>
 <div class="vessel">
+
     <table>
 
         <tr>
@@ -50,9 +47,9 @@
         
     </div>
 
-
     Back ->Forum"<a href="{{ '/forum/%s'%forum_id }}"> {{theme}} </a>"
-{% endif %}
+
+    {% endif %}
 </div>
 {% endblock %}
 

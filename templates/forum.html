@@ -3,16 +3,16 @@
 
 <div class="wrapper">
 {% if session.user_account %}
-<div class="div_table">
+<div class="button_line">
     <form action= "{{ '/create/topic/%d'%forum_id }}" > 
         <button type="submit">Create topic </button>
     </form>
     {% if is_owner %}
-    <form action= "{{ '/remove/forum/%s'%forum_id }}"> 
-        <button type="submit">Remove forum </button>
-    </form>
     <form action= "{{ '/edit/theme/%s'%forum_id }}"> 
         <button type="submit">Edit theme </button>
+    </form>
+    <form action= "{{ '/remove/forum/%s'%forum_id }}"> 
+        <button type="submit">Remove forum </button>
     </form>
     {% endif %}
     {% if not is_public %}
@@ -25,13 +25,9 @@
         <button type="submit">Invite user to "{{theme}}" </button>
     </form>
     {% endif %}
+    <p>Welcome to the theme: "{{theme}}"</p>
 </div>
-<br>
 <!-- <p>{{ session. user_account  }}.You are logged in.</p> -->
-<p>Welcome to the theme: </p>
-<h2>"{{theme}}"</h2> 
-
-<br>
 
 <h4>Topic:</h4>
 <div class="vessel">
@@ -55,7 +51,7 @@
             <tr>
             {% if topic.visibility==True%}
             <td><a href= "{{ '/topic/%s'%topic.topic_id }}"%topic.topic_id>{{topic.topic_id}}</a></td>
-            <td><a href= "{{ '/topic/%s'%topic.topic_id }}"%topic.topic_id>{{topic.title}}</td>
+            <td><a href= "{{ '/topic/%s'%topic.topic_id }}"%topic.topic_id>{{topic.title}}</a></td>
             <td>{{ topic.num}}</td>
             {% endif%}
             </tr>
