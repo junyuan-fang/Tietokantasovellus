@@ -1,4 +1,4 @@
-from flask import request, render_template, redirect, session, abort
+from flask import request, render_template, redirect, session
 from app import app
 import users, forums, topics, requests, messages
 
@@ -35,6 +35,10 @@ def register():
         username = request.form["username"]
         password1 = request.form["password1"]
         password2 = request.form["password2"]
+        if len(username) > 50:
+            return render_template("error.html", message="Registration failed, username is too long")
+        if len(password1) > 50 or len(password2) > 50:
+            return render_template("error.html", message="Registration failed, password1 is too long")
         if username =="":#username can not be empty
             return render_template("error.html", message="Username can not be empty")
         if (password1 != password2 ):
@@ -54,6 +58,8 @@ def create_forum():
             if session["csrf_token"] != request.form["csrf_token"]:
                 return render_template("error.html", message="Permission denied" )
             theme = request.form["theme"]
+            if len(theme) > 100:
+                return render_template("error.html", message="Theme is too long")
             public_value = request.form["public"]
             if theme == "":
                 return render_template("error.html", message= "Theme can not be empty")
@@ -138,6 +144,8 @@ def create_topic(forum_id):
                 if session["csrf_token"] != request.form["csrf_token"]:
                     return render_template("error.html", message="Permission denied" )
                 topic = request.form["topic"]
+                if len(topic) > 100:
+                    return render_template("error.html", message="Topic is too long")
                 initial_message = request.form["message"]
                 if initial_message == "":
                     return render_template("error.html", message = "Message can not be empty")
@@ -160,6 +168,8 @@ def edit_theme(forum_id):
             if session["csrf_token"] != request.form["csrf_token"]:
                 return render_template("error.html", message="Permission denied" )
             new_theme = request.form["theme"]
+            if len(theme) > 100:
+                return render_template("error.html", message="Theme is too long")
             forums.edit_theme(forum_id,new_theme)
             return redirect(f"/forum/{forum_id}")
         return render_template("edit_theme.html", forum_id = forum_id, theme=theme)
@@ -256,6 +266,8 @@ def edit_title(topic_id):
             if session["csrf_token"] != request.form["csrf_token"]:
                 return render_template("error.html", message="Permission denied")
             new_title = request.form["title"]
+            if len(new_title) > 100:
+                return render_template("error.html", message="Title is too long")
             topics.edit_title(topic_id,new_title)
             return redirect(f"/topic/{topic_id}")
         return render_template("edit_title.html", topic_id=topic_id, title=title)
@@ -287,6 +299,8 @@ def create_message(topic_id):
                 if session["csrf_token"] != request.form["csrf_token"]:
                     return render_template("error.html", message="Permission denied" ) 
                 message = request.form["message"]
+                if len(message) > 300:
+                    return render_template("error.html", message="Message is too long")
                 if message=="":
                     return render_template("error.html", message="Message can not be empty")
                 if(topics.create_message(topic_id, message)):
@@ -328,6 +342,8 @@ def edit_message(message_id):
             if session["csrf_token"] != request.form["csrf_token"]:
                 return render_template("error.html", message="Permission denied")
             new_content = request.form["message"]
+            if len(new_content) > 300:
+                return render_template("error.html", message="Message is too long")
             messages.edit_message(message_id,new_content,user_id)
             return redirect(f"/topic/{topic_id}")
         return render_template("edit_message.html", message_id=message_id, topic_id=topic_id, content=content)
