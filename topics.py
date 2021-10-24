@@ -13,7 +13,9 @@ def get_title(topic_id):
 
 #return the forum_id where topic belongs to
 def get_forum_id(topic_id):
-    sql = "SELECT T.forum_id FROM topic T  INNER JOIN forums F ON T.forum_id= F.forum_id WHERE T.topic_id=:topic_id"
+    sql = """SELECT T.forum_id 
+        FROM topic T  
+        WHERE T.topic_id=:topic_id"""
     result= db.session.execute(sql, {"topic_id":topic_id})
     forum_id=result.fetchone()[0]
     return forum_id
@@ -39,8 +41,11 @@ def create_message(topic_id, message):
         print(e)
         return False
 
+#remove topic, remove message
 def remove_topic(topic_id):
     sql = "UPDATE topic SET visibility=FALSE WHERE topic_id=:id"
+    db.session.execute(sql, { "id":topic_id })
+    sql = "UPDATE messages SET visibility=FALSE WHERE topic_id=:id"
     db.session.execute(sql, { "id":topic_id })
     db.session.commit()
 

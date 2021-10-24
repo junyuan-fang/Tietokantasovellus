@@ -1,5 +1,6 @@
+from flask.templating import render_template_string
 from app import app
-import users, forums, topics, requests
+import users, forums, topics, requests, messages
 from flask import request, render_template, redirect, session, abort
 
 @app.route("/")
@@ -197,7 +198,7 @@ def remove_forum_user(user_id,forum_id):
     if user_id==forums.get_owner_id(forum_id):
         return render_template("error.html", message="Owner can not be deleted")
     if users.is_owner(users.user_id(), forum_id):
-        forums.remove_user_from_forum(user_id,forum_id)
+        forums.remove_user_from_forum(user_id,forum_id)#what if already removed
         return redirect(f"/forum_users/{forum_id}")
     return render_template("error.html", message="Permission denied" )
 
@@ -234,11 +235,18 @@ def edit_title(topic_id):
     return render_template("error.html", message="Permission denied" )
 
 #for deleting topics
+#only admin and topic creater can delete topic
 @app.route("/remove/topic/<int:topic_id>")
 def remove_topic(topic_id):
-    topics.remove_topic(topic_id)
     forum_id= topics.get_forum_id(topic_id)
-    return redirect(f"/forum/{forum_id}")
+    user_id=users.user_id()
+    is_owner=users.is_owner(user_id, forum_id)
+    is_topic_owner=users.is_topic_owner(user_id,topic_id)
+    if is_owner or is_topic_owner:
+        topics.remove_topic(topic_id)#what if already removed
+        forum_id= topics.get_forum_id(topic_id)
+        return redirect(f"/forum/{forum_id}")
+    return render_template("error.html", message="Permission denied" ) 
 
 #create message in topic    
 @app.route("/create/message/<int:topic_id>", methods = ["GET", "POST"])
@@ -257,5 +265,19 @@ def create_message(topic_id):
         return render_template("error.html", message = "Failed to create topic")
         
 #-----------------------------------------------------------------------------------------
-#  delete message
+#on the message page:
+
+# delete message
+# only admin and message creater can delete message
+@app.route("/remove/message/<int:message_id>")
+def remove_message(message_id):
+    user_id=users.user_id()
+    forum_id=messages.get_forum_id(message_id)
+    is_owner=users.is_owner(user_id, forum_id)
+    is_message_owner=users.is_message_owner(user_id,message_id)
+    if is_owner or is_message_owner:
+        topic_id= messages.get_topic_id(message_id)
+        messages.remove_message(message_id)
+        return redirect(f"/topic/{topic_id}")
+    return render_template("error.html",message="Permission denied")
 

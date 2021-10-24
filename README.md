@@ -25,7 +25,7 @@ Sovelluksessa näkyy keskustelualueita, joista jokaisella on tietty aihe. Alueil
   * Pyyntö on muodossa: "User1" want add "User2" to private "Forum". ✔️
   * Navigointi suoraan alueseen ✔️
 ### Alueella
-* Näkee  listalla "Topic id ", "Title" ja viestien määrä ✔️
+* Näkee  listalla "Title", viestien määrä ja aika, jolloin viestiä lähetetiin viimeksi✔️️
 * Ketjun otsikon kautta pääsee kyseiselle ketjulle ✔️
 * Pääsee etusivulle takaisin. ✔️
 * "Create topic"
@@ -57,13 +57,15 @@ Sovelluksessa näkyy keskustelualueita, joista jokaisella on tietty aihe. Alueil
   * Vain ketjun luojalle ja Adminille näytetään tätä painiketta ✔️
   * Vain ketjun luoja ja admin pääsee muokkamaan ketjun ostikkoa ✔️
 * "Remove topic"
-  * Vain ketjun luojalle ja Adminille näytetään tätä painiketta ✖️
-  * Vain ketjun luoja ja Admin pääsee poistamaan alueen ✖️
+  * Vain ketjun luojalle ja Adminille näytetään tätä painiketta ✔️
+  * Vain ketjun luoja ja Admin pääsee poistamaan alueen ✔️
 
 ### Muut toiminnot
 * "Rollback" toiminto "error" virheestä ✖️
 <!-- ### Sovelluksen jatkokehitykset
-*  -->
+* Näyttää datat "Dialog box":ssa
+* Kuvien tallentaminen
+* käyttäjä tietojen tallentaminen -->
 ***
 
 

@@ -24,17 +24,14 @@ def remove_forum(forum_id):
     db.session.execute(sql, { "forum_id":forum_id })
     #remove topics
     sql = """
-            UPDATE topic T 
-            SET visibility=False
-            FROM forums F
-            WHERE T.forum_id=:forum_id
+            UPDATE topic SET visibility=False WHERE forum_id=:forum_id
         """
     db.session.execute(sql, { "forum_id":forum_id })
     #remove messages
     sql ="""
             UPDATE messages M 
             SET visibility=False
-            FROM topic T, forums F
+            FROM topic T
             WHERE M.topic_id=T.topic_id AND T.forum_id=:forum_id
         """
     db.session.execute(sql, { "forum_id":forum_id })
@@ -51,11 +48,15 @@ def get_theme(forum_id):
 
 #used inner form
 def get_topics(forum_id):
-    #SELECT T.topic_id, T.title, T.visibility, T.user_id, counter.num FROM topic T,(SELECT T.topic_id AS topic_id, COUNT(*) AS num FROM topic T INNER JOIN messages M ON M.topic_id=T.topic_id WHERE T.visibility=True AND M.visibility=True GROUP BY T.topic_id ) AS counter WHERE counter.topic_id=T.topic_id;
-    inner_form=",(SELECT T.topic_id AS topic_id, COUNT(*) AS num FROM topic T INNER JOIN messages M ON M.topic_id=T.topic_id WHERE T.visibility=True AND M.visibility=True GROUP BY T.topic_id ) AS counter " 
-    inner_select=", counter.num"
-    inner_where= "AND counter.topic_id=T.topic_id"
-    sql = "SELECT T.topic_id, T.title, T.visibility, T.user_id"+inner_select+" FROM topic T"+inner_form+" WHERE T.forum_id=:forum_id "+inner_where
+    sql = """SELECT T.topic_id, T.title, T.visibility, T.user_id, counter.num, counter.time_stamp
+            FROM topic T,
+            (SELECT T.topic_id AS topic_id, COUNT(*) AS num, MAX(M.created_at) AS time_stamp
+            FROM topic T INNER JOIN messages M 
+            ON M.topic_id=T.topic_id 
+            WHERE T.visibility=True AND M.visibility=True 
+            GROUP BY T.topic_id ) AS counter 
+            WHERE T.forum_id=:forum_id AND counter.topic_id=T.topic_id 
+            ORDER BY counter.time_stamp DESC"""
     result = db.session.execute(sql, {"forum_id": forum_id})
     return result.fetchall()
  

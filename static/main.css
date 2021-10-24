@@ -180,5 +180,10 @@ form{
     grid-template-columns: 5em 10em;
     grid-row-gap: .5em;
     } 
-    
+
+table td{
+    text-align:center; 
+    border-left: 1px solid rgb(219, 219, 219); 
+    border-right: 1px solid rgb(219, 219, 219); 
+}
 

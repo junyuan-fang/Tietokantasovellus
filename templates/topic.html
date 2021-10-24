@@ -29,9 +29,10 @@
         <tr>
 
         <th>Message id</th>
-        <th>User id</th>
         <th>Content</th>
+        <th>Sent by user</th>
         <th>Sent at</th>
+        <th>Modify</th>
 
         </tr>
 
@@ -39,9 +40,10 @@
         <tr>
         {% if message.visibility==True%}
         <td>{{ message.message_id }}</a></td>
+        <td style="width:400px">{{ message.content }}</td>
         <td>{{ message.account }}</td>
-        <td>{{ message.content }}</td>
-        <td>{{ message.created_at.strftime("%Y-%m-%d %H:%M:%S")}}</td>
+        <td style="width:150px">{{ message.created_at.strftime("%Y-%m-%d %H:%M:%S")}}</td>
+        <td style="width:100px"><a>Edit</a>/<a href="{{'/remove/message/%s'%message.message_id}}">Remove</a></td>
         {% endif%}
         </tr>
 

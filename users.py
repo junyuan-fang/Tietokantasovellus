@@ -16,10 +16,8 @@ def login(username,password):
             session["user_id"]=user.user_id
             session["csrf_token"] = secrets.token_hex(16)
             return True
-        else:
-            return False
-    else:
         return False
+    return False
 
 def logout():
     del session["user_id"]
@@ -27,7 +25,6 @@ def logout():
     del session["csrf_token"]
 
 def user_id():
-    #print("user_id: ", session.get("user_id", 0))
     return session.get("user_id", 0)
 
 #return the empty string, if user_account not found
@@ -87,7 +84,6 @@ def get_message_query(user_id,keyword):
     return  result.fetchall()
 
 def user_in_forum(user_id, forum_id):
-    user_in_forum=False
     sql= """SELECT UF.isOwner
             FROM user_forum UF
             WHERE UF.forum_id=:forum_id AND UF.user_id=:user_id
@@ -95,8 +91,8 @@ def user_in_forum(user_id, forum_id):
     result=db.session.execute(sql,{"user_id":user_id, "forum_id":forum_id})
     value=result.fetchone()
     if value:
-        user_in_forum=True
-    return user_in_forum
+        return True
+    return False
 
 def is_owner(user_id, forum_id):
     sql= """SELECT UF.isOwner
@@ -122,7 +118,7 @@ def is_topic_owner(user_id, topic_id):
 
 def is_message_owner(user_id, message_id):
     sql= """SELECT M.user_id
-            FROM message M
+            FROM messages M
             WHERE M.message_id=:message_id AND M.user_id=:user_id
         """
     result=db.session.execute(sql,{"user_id":user_id, "message_id":message_id})

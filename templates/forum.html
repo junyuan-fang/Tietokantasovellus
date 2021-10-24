@@ -39,10 +39,12 @@
         <th>Topic id</th>
         <th>Title</th>
         <th>Messages</th>
+        <th>Sent at</th>
 
         </tr>
         {% if not topics%}
             <tr>
+            <td>None</td>
             <td>None</td>
             <td>None</td>
             <td>None</td>
@@ -54,6 +56,8 @@
             <td><a href= "{{ '/topic/%s'%topic.topic_id }}"%topic.topic_id>{{topic.topic_id}}</a></td>
             <td><a href= "{{ '/topic/%s'%topic.topic_id }}"%topic.topic_id>{{topic.title}}</a></td>
             <td>{{ topic.num}}</td>
+            <td>{{ topic.time_stamp.strftime("%Y-%m-%d %H:%M:%S")}}</td>
+            
             {% endif%}
             </tr>
             {% endfor %}
