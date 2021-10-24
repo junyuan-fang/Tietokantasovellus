@@ -21,7 +21,7 @@ def get_forum_id(topic_id):
     return forum_id
 
 def get_messages(topic_id):
-    sql = """SELECT M.message_id, M.topic_id, U.account, M.content, M.created_at, M.visibility 
+    sql = """SELECT M.message_id, M.topic_id, M.user_id, U.account, M.content, M.created_at, M.visibility 
             FROM messages M
             INNER JOIN users U
             ON U.user_id=M.user_id

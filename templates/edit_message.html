@@ -14,11 +14,10 @@
 
     </style>
 
-
 <div class="content">
-<form class="create_form" autocomplete="on" action="{{ '/edit/message/%s'%topic_id }}" method="POST">
+<form class="create_form" autocomplete="on" action="{{ '/edit/message/%s'%message_id }}" method="POST">
     <label>Message:</label>
-    <textarea name="message" rows="3" cols="40" maxlength="300" placeholder="The maximum number of characters are 300"></textarea>
+    <textarea name="message" rows="3" cols="40" maxlength="300" >{{ '%s'%content }}</textarea>
     <input id ="button" type="submit" value="Send">
     <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 </form>

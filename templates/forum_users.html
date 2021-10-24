@@ -24,16 +24,17 @@ Users in Forum
     <tr>
         <td>{{ user.account }}</td>
         {% if is_owner %}
-        {% if user_id != user.user_id%}
-        <td><a href="{{'/remove/forum_user/%s/%s'% (user.user_id, forum_id)}}" >Remove </a></td>
-        {% else%}
-        <td>Owner can not be removed</td>
-        {% endif %}
+            {% if user_id != user.user_id%}
+                <td><a href="{{'/remove/forum_user/%s/%s'% (user.user_id, forum_id)}}" >Remove </a></td>
+            {% else%}
+                <td>Owner can not be removed</td>
+            {% endif %}
         {% endif %}
     </tr>
     {% endfor %}
 
 </table>
+Forum "{{theme}}" owner is "{{user_account}}"
 </div>
 <--<a href="{{ '/forum/%s'%forum_id }}"> Back </a>
 {% endif %}

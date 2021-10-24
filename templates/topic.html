@@ -43,8 +43,12 @@
         <td style="width:400px">{{ message.content }}</td>
         <td>{{ message.account }}</td>
         <td style="width:150px">{{ message.created_at.strftime("%Y-%m-%d %H:%M:%S")}}</td>
-        <td style="width:100px"><a>Edit</a>/<a href="{{'/remove/message/%s'%message.message_id}}">Remove</a></td>
-        {% endif%}
+            {% if message.user_id== user_id or is_owner %}
+            <td style="width:100px"><a href="{{'/edit/message/%s'%message.message_id}}" >Edit</a>/<a href="{{'/remove/message/%s'%message.message_id}}">Remove</a></td>
+            {% else %}
+            <td></td>
+            {% endif %}
+        {% endif %}
         </tr>
 
         {% endfor %}

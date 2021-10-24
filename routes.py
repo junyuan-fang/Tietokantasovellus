@@ -161,7 +161,8 @@ def forum_users(forum_id):
     is_owner=users.is_owner(user_id,forum_id)  
     users_list=forums.get_users(forum_id)
     theme=forums.get_theme(forum_id)
-    return render_template("forum_users.html",users=users_list, theme=theme,forum_id=forum_id,is_owner=is_owner,user_id=user_id)
+    account = session["user_account"]
+    return render_template("forum_users.html",users=users_list, theme=theme,forum_id=forum_id,is_owner=is_owner,user_id=user_id, user_account=account)
 
 #incude making a request
 @app.route("/forum_add_users/<int:forum_id>", methods=["GET", "POST"])
@@ -216,7 +217,7 @@ def topic(topic_id):
     is_owner=users.is_owner(user_id, forum_id)
     is_topic_owner=users.is_topic_owner(user_id,topic_id)
     return render_template("topic.html",title=title, topic_id=topic_id, messages=messages_list,\
-                             forum_id=forum_id, theme=theme, is_owner=is_owner, is_topic_owner=is_topic_owner )
+                             forum_id=forum_id, user_id=user_id, theme=theme, is_owner=is_owner, is_topic_owner=is_topic_owner )
 
 #edit title
 @app.route("/edit/title/<int:topic_id>", methods=["GET","POST"])
@@ -281,3 +282,20 @@ def remove_message(message_id):
         return redirect(f"/topic/{topic_id}")
     return render_template("error.html",message="Permission denied")
 
+#only message creater can edit message
+#if admin edit the message, sender will turns to the admin.
+@app.route("/edit/message/<int:message_id>", methods=["GET", "POST"])
+def edit_message(message_id):
+    user_id=users.user_id()
+    forum_id=messages.get_forum_id(message_id)
+    is_owner=users.is_owner(user_id, forum_id)
+    is_message_owner=users.is_message_owner(user_id,message_id)
+    if is_owner or is_message_owner:#get content #submit
+        topic_id= messages.get_topic_id(message_id)
+        content = messages.get_content(message_id)
+        if request.method=="POST":
+            new_content=request.form["message"]
+            messages.edit_message(message_id,new_content,user_id)
+            return redirect(f"/topic/{topic_id}")
+        return render_template("edit_message.html", message_id=message_id, topic_id=topic_id, content=content)
+    return render_template("error.html",message="Permission denied")

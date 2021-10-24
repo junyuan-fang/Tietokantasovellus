@@ -13,9 +13,7 @@ body{
     margin-left: auto;
     margin-right: auto;
   }
-.bar{
-    background-color: rgba(172, 119, 172, 0.993);
-}
+
 .vessel {/*form,message,topic */
     padding: 4em 2em;
     background: white;
