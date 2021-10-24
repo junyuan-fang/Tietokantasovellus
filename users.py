@@ -1,15 +1,12 @@
-from operator import truediv
-import re
 import secrets
-from flask.templating import render_template
-from db import db
 from flask import session
 from werkzeug.security import check_password_hash, generate_password_hash
+from db import db
 
 def login(username,password): 
-    sql="SELECT U.user_id, U.password FROM users U WHERE U.account=:username"
-    result=db.session.execute(sql, {"username": username})
-    user=result.fetchone()
+    sql = "SELECT U.user_id, U.password FROM users U WHERE U.account=:username"
+    result = db.session.execute(sql, {"username": username})
+    user = result.fetchone()
     if user:
         if check_password_hash(user.password, password):
             session["user_account"]=username
@@ -43,7 +40,7 @@ def register(username, password):
 
 def get_forums(user_id):
     #sql="SELECT F.forum_id, F.theme, F.public, F.visibility FROM user_forum UF INNER JOIN users U on U.user_id=UF.user_id INNER JOIN forums F on F.forum_id=UF.forum_id WHERE U.user_id=(:user_id) OR F.public=True"
-    sql="""SELECT  FT.public public, FT.theme theme, FT.topic_num topic_num, FT.message_num message_num, FT.time_stamp time_stamp, FT.forum_id forum_id
+    sql = """SELECT  FT.public public, FT.theme theme, FT.topic_num topic_num, FT.message_num message_num, FT.time_stamp time_stamp, FT.forum_id forum_id
     FROM user_forum UF
     INNER JOIN users U ON U.user_id=UF.user_id
     INNER JOIN 
@@ -67,7 +64,7 @@ def get_forums(user_id):
     return result.fetchall()
 
 def get_message_query(user_id,keyword):
-    sql="""
+    sql = """
         SELECT FT.account,  FT.content, FT.created_at, FT.title, FT.public, FT.theme
         FROM user_forum UF
         INNER JOIN
@@ -80,38 +77,38 @@ def get_message_query(user_id,keyword):
         ON UF.forum_id=FT.forum_id
         WHERE UF.user_id=:user_id OR FT.public=True
         """
-    result=db.session.execute(sql,{"user_id":user_id, "keyword": f"%{keyword}%"})
+    result = db.session.execute(sql,{"user_id":user_id, "keyword": f"%{keyword}%"})
     return  result.fetchall()
 
 def user_in_forum(user_id, forum_id):
-    sql= """SELECT UF.isOwner
+    sql = """SELECT UF.isOwner
             FROM user_forum UF
             WHERE UF.forum_id=:forum_id AND UF.user_id=:user_id
         """
-    result=db.session.execute(sql,{"user_id":user_id, "forum_id":forum_id})
-    value=result.fetchone()
+    result = db.session.execute(sql,{"user_id":user_id, "forum_id":forum_id})
+    value = result.fetchone()
     if value:
         return True
     return False
 
 def is_owner(user_id, forum_id):
-    sql= """SELECT UF.isOwner
+    sql = """SELECT UF.isOwner
             FROM user_forum UF
             WHERE UF.forum_id=:forum_id AND UF.user_id=:user_id
         """
-    result=db.session.execute(sql,{"user_id":user_id, "forum_id":forum_id})
-    value=result.fetchone()
+    result = db.session.execute(sql,{"user_id":user_id, "forum_id":forum_id})
+    value = result.fetchone()
     if value:
         return value[0]
     return False
 
 def is_topic_owner(user_id, topic_id):
-    sql= """SELECT T.user_id
+    sql = """SELECT T.user_id
             FROM topic T
             WHERE T.topic_id=:topic_id AND T.user_id=:user_id
         """
-    result=db.session.execute(sql,{"user_id":user_id, "topic_id":topic_id})
-    value=result.fetchone()
+    result = db.session.execute(sql,{"user_id":user_id, "topic_id":topic_id})
+    value = result.fetchone()
     if value:
         return True
     return False
@@ -121,21 +118,30 @@ def is_message_owner(user_id, message_id):
             FROM messages M
             WHERE M.message_id=:message_id AND M.user_id=:user_id
         """
-    result=db.session.execute(sql,{"user_id":user_id, "message_id":message_id})
-    value=result.fetchone()
+    result = db.session.execute(sql,{"user_id":user_id, "message_id":message_id})
+    value = result.fetchone()
     if value:
         return True
     return False
 
-
+#incude the situation that user is not found
 def get_user_id(user_account):
     sql="""
         SELECT U.user_id
         FROM users U
         WHERE U.account=:user_account
         """
-    result=db.session.execute(sql,{"user_account":user_account})
-    value=result.fetchone()
+    result = db.session.execute(sql,{"user_account":user_account})
+    value = result.fetchone()
     return value
 
+def get_user_account(user_id):
+    sql="""
+        SELECT U.account
+        FROM users U
+        WHERE U.user_id=:user_id
+        """
+    result = db.session.execute(sql,{"user_id":user_id})
+    value = result.fetchone()[0]
+    return value
 

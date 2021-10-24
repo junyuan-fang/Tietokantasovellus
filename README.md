@@ -7,32 +7,33 @@ Sovelluksessa näkyy keskustelualueita, joista jokaisella on tietty aihe. Alueil
 
 
 ## Sovelluksen ominaisuuksia:
-
+Viesti max 300 char
+Alueen ja ketjun otsikot max 70 char
 ### Etusivulla
 * Luoda uuden tunnuksen :heavy_check_mark:
-* Kirjaudu tunnuksella sisään. Kirjaudu ulos ✔️
-* Näkee  listalla "public" ja hänen osallistuman "private" alueen otsikot, ketjujen ja viestien määrä ja viimeksi lähetetyn viestin ajankohdan. :heavy_check_mark:
-* Alueen otsikon kautta pääsee kyseiselle aluelle ✔️
+* Kirjauduu tunnuksella sisään. Kirjaudu ulos ✔️
+* Näkee  listalla "public" ja hänen osallistuman "private" alueen otsikot, ketjujen ja viestien määrä ja viimeksi lähetetyn viestin ajankohta. :heavy_check_mark:
+* Alueen otsikon kautta pääse kyseiselle alueelle ✔️
 * "Create forum"  
-  * Voi luoda uuden private/public alueen antamalla aluen nimi. ✔️
+  * Voi luoda uuden private/public alueen antamalla alueen otsikko. ✔️
 * "Search messages" 
-  * Voi etsiä kaikki viestit, joiden osana on annettu sana. ✔️
-  * Näytetään kaikki "Public" alueen liittyvät viestit + kaikki käyttäjä osallistuman "Private" alueen viestit ✔️
-  * Navigointi suoraan alueseen ✔️
+  * Voi etsiä kaikki viestit, joiden osa on sama kuin avainsana. ✔️
+  * Näytetään kaikki "Public" alueeseen liittyvät viestit + kaikki käyttäjä osallistuman "Private" alueen viestit ✔️
+  * Navigointi suoraan alueeseen ✔️
 * "Show requests" 
-  * Tämä painike näkyy, jos hän on joku alueen Admin :heavy_check_mark:
-  * Alueen kohtainen Admin käyttäjä voi vahvistaa tai hylkää pyyntöä ✔️
+  * Tämä painike näkyy, jos käyttäjä on jonkun alueen admin :heavy_check_mark:
+  * Aluekohtainen admin käyttäjä voi vahvistaa tai hylkää pyyntöä ✔️
   * Pyyntö on muodossa: "User1" want add "User2" to private "Forum". ✔️
-  * Navigointi suoraan alueseen ✔️
+  * Navigointi suoraan alueeseen ✔️
 ### Alueella
 * Näkee  listalla "Title", viestien määrä ja aika, jolloin viestiä lähetetiin viimeksi✔️️
-* Ketjun otsikon kautta pääsee kyseiselle ketjulle ✔️
+* Ketjun otsikon kautta pääse kyseiselle ketjulle ✔️
 * Pääsee etusivulle takaisin. ✔️
 * "Create topic"
   * Voi luoda uuden ketjun antamalla ketjun otsikko ja aloitusviestin sisällön. Alueen luoja on admin ✔️
 * "Edit theme"
-  * Vain alueen luojalle ja Adminille näytetään tätä painiketta ✔️
-  * Vain alueen luoja ja admin pääsee muokkamaan alueen otsikkoa ✔️
+  * Vain alueen luojalle ja adminille näytetään tätä painiketta ✔️
+  * Vain alueen luoja ja admin pääsevät muokkamaan alueen otsikkoa ✔️
 * "Remove forum"
   * Vain admin pääsee poistamaan alueen ✔️
     * Alueen poisto ✔️
@@ -40,17 +41,17 @@ Sovelluksessa näkyy keskustelualueita, joista jokaisella on tietty aihe. Alueil
     * Viestin poisto ✔️
     * Pyynnön poisto ✔️
 * "Show users"
-  * Näyttää kaikki Alueen osallistujat ✔️
-  * Admin voi poistaa Alueen osallistuja ✔️
+  * Näytä kaikki alueen osallistujat ✔️
+  * Admin voi poistaa alueen osallistuja ✔️
   * Admin pääsee "Invite user" sivulle ✔️
 * "Invite user"
-  * Muodosta "Request" viestin alueen Adminille.✔️
+  * Muodostaa "Request" viestin alueen adminille.✔️
   * "Users not in forum"
 ### Ketjulla
 * Näkee  listalla "Message id","User id", "Content, "Sent at ✔️
 * Pääsee alueelle takaisin ✔️
-* Viestin kirjoittaja pääsee muokkamaan viestiä ✖️️
-* Admin ja viestin kirjoittaja pääsee poistamaan viestin ✖️️
+* Viestin kirjoittaja ja admin pääsee muokkamaan viestiä ✔️
+* Admin ja viestin kirjoittaja pääsee poistamaan viestin ✔️
 * "Create Message"
   * Voi kirjoittaa uuden viestin ketjulle ✔️
 * "Edit topic"
@@ -58,29 +59,17 @@ Sovelluksessa näkyy keskustelualueita, joista jokaisella on tietty aihe. Alueil
   * Vain ketjun luoja ja admin pääsee muokkamaan ketjun ostikkoa ✔️
 * "Remove topic"
   * Vain ketjun luojalle ja Adminille näytetään tätä painiketta ✔️
-  * Vain ketjun luoja ja Admin pääsee poistamaan alueen ✔️
+  * Vain ketjun luoja ja admin pääsee poistamaan alueen ✔️
 
-### Muut toiminnot
-* "Rollback" toiminto "error" virheestä ✖️
 <!-- ### Sovelluksen jatkokehitykset
 * Näyttää datat "Dialog box":ssa
 * Kuvien tallentaminen
 * käyttäjä tietojen tallentaminen -->
 ***
+## Käyttäminen
+WebChatting voi testata [herokussa](https://web-chatting-app.herokuapp.com/)
+## Tietokanta
+<img src="documentation/SQL.png">
 
-
-#### Nykyinen tilanne（26.09.2021）:
-* Tietokannan "CREATE" taulut näkyy "schema.sql" tiedostossa.<a href="https://github.com/junyuan-fang/WebChatting/blob/master/SQL.png" target="_blank">SQL.png</a>
-* html-sivustot on jaettu karkeasti
-* Käyttäjäliittymä on piirretty karkeasti. <a href="https://github.com/junyuan-fang/WebChatting/blob/master/Kayttoliittyma.pdf" target="_blank">Kayttoliittyma.pdf</a>
-* Sivusto voidaan avata herokussa, mutta sivut ovat täysin tyhjiä.
-* Click [here](https://web-chatting-app.herokuapp.com/) to the website.
-
-
-#### Nykyinen tilanne（10.10.2021）:
-* On mahdollista, että sovelluksessa löytyy muita haavoittuvuuksia kuin SQL-injektio.
-* "request" osuus ja "haut" nämä ominaisuudet ovat toteuttamatt.
-* 1-kysely on kesken
-* Sovellus toimii paikallisessa ympäristössä. Herokussa ei ole testattu huolellisesti.
-* Click [here](https://web-chatting-app.herokuapp.com/) to the website.
-
+## Ulkoasu
+Sovelluksen ulkoasu toteutetiin manuaalisesti ilman kirjastoa.

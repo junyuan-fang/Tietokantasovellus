@@ -5,14 +5,14 @@ def create_forum(theme, public_value):
     try:
         #1.insert to forums
         sql = "INSERT INTO forums (theme, public, visibility) VALUES (:theme, :public, :visibility) RETURNING forum_id" 
-        result=db.session.execute(sql,{"theme": theme, "public": public_value, "visibility": True})
+        result = db.session.execute(sql, {"theme": theme, "public": public_value, "visibility": True})
         #2. insert to user_forum
-        forum_id=result.fetchone()[0]
+        forum_id = result.fetchone()[0]
         sql = "INSERT INTO user_forum (forum_id, user_id, isOwner) VALUES (:forum_id, :user_id, :isOwner)"#user_forum starts
         db.session.execute(sql,{"forum_id":forum_id, "user_id": session["user_id"], "isOwner": True})
         db.session.commit()
         return True
-    except Exception as e:
+    except:
         return False
 
 def remove_forum(forum_id):
@@ -28,22 +28,21 @@ def remove_forum(forum_id):
         """
     db.session.execute(sql, { "forum_id":forum_id })
     #remove messages
-    sql ="""
+    sql = """
             UPDATE messages M 
             SET visibility=False
             FROM topic T
             WHERE M.topic_id=T.topic_id AND T.forum_id=:forum_id
         """
     db.session.execute(sql, { "forum_id":forum_id })
-
     db.session.commit()
 
 #return str
 def get_theme(forum_id):
     sql = "SELECT F.theme FROM forums F WHERE F.forum_id=:forum_id"
     result = db.session.execute(sql, { "forum_id":forum_id })
-    print("THE TYPE OF RESULT IS ",result)
-    theme= result.fetchone()[0]
+    print("THE TYPE OF RESULT IS ", result)
+    theme = result.fetchone()[0]
     return theme
 
 #used inner form
@@ -66,25 +65,24 @@ def create_topic(topic, initial_message, forum_id):
     try:
         #1. insert to topic
         sql = "INSERT INTO topic (user_id, forum_id, title, visibility) VALUES (:user_id, :forum_id, :topic,:visibility) RETURNING topic_id"
-        result=db.session.execute(sql,{"user_id": session["user_id"], "forum_id": forum_id, "topic":topic, "visibility": True})
+        result = db.session.execute(sql,{"user_id": session["user_id"], "forum_id": forum_id, "topic":topic, "visibility": True})
         #2. insert to message
-        topic_id= result.fetchone()[0]
+        topic_id = result.fetchone()[0]
         sql = "INSERT INTO messages ( topic_id, user_id, content, created_at, visibility) VALUES (:topic_id, :user_id, :content, NOW(), :visibility)"
         db.session.execute(sql, {"topic_id":topic_id, "user_id":session["user_id"], "content": initial_message, "visibility": True})
         db.session.commit()
         return True
-
-    except Exception as e:
+    except:
         return False
 
 def is_public(forum_id):
-    sql="""
+    sql = """
         SELECT public
         FROM forums F
         WHERE F.forum_id=:forum_id
     """
-    result=db.session.execute(sql,{"forum_id":forum_id})
-    is_public_=result.fetchone()[0]
+    result = db.session.execute(sql,{"forum_id":forum_id})
+    is_public_= result.fetchone()[0]
     return is_public_
 
 def get_users(forum_id):
@@ -94,7 +92,7 @@ def get_users(forum_id):
         WHERE F.forum_id=UF.forum_id AND UF.user_id=U.user_id
             AND F.forum_id=:forum_id
     """
-    result=db.session.execute(sql,{"forum_id":forum_id})
+    result = db.session.execute(sql,{"forum_id":forum_id})
     return result.fetchall()
 
 def get_owner_id(forum_id):
@@ -103,7 +101,7 @@ def get_owner_id(forum_id):
         FROM user_forum UF
         WHERE UF.forum_id=:forum_id AND UF.isOwner=True
         """
-    result=db.session.execute(sql,{"forum_id":forum_id})
+    result = db.session.execute(sql,{"forum_id":forum_id})
     return result.fetchone()[0]
 
 def remove_user_from_forum(user_id, forum_id):
