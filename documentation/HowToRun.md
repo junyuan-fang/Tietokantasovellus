@@ -2,6 +2,7 @@
 * SQL
   * ```start-pg.sh```
   * ```psql < schema.sql```
+  * ```Ctrl-C```
 * Heroku
   *  Adding enviroments
     *  ```pip freeze > requirements.txt```
