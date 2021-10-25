@@ -8,7 +8,7 @@ Sovelluksessa näkyy keskustelualueita, joista jokaisella on tietty aihe. Alueil
 
 ## Sovelluksen ominaisuuksia:
 Viesti max 300 char
-Alueen ja ketjun otsikot max 70 char
+Alueen ja ketjun otsikot max 100 char, käyttäjätunnus ja salasana max 50 char.
 ### Etusivulla
 * Uuden tunnuksen luominen:heavy_check_mark:
 * Voi kirjautua tunnuksella sisään. Kirjaudu ulos ✔️
