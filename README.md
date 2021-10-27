@@ -8,12 +8,12 @@ Sovelluksessa näkyy keskustelualueita, joista jokaisella on tietty aihe. Alueil
 
 ## Sovelluksen ominaisuuksia:
 Viesti max 300 char
-Alueen ja ketjun otsikot max 70 char
+Alueen ja ketjun otsikot max 100 char, käyttäjätunnus ja salasana max 50 char.
 ### Etusivulla
-* Luoda uuden tunnuksen :heavy_check_mark:
-* Kirjauduu tunnuksella sisään. Kirjaudu ulos ✔️
-* Näkee  listalla "public" ja hänen osallistuman "private" alueen otsikot, ketjujen ja viestien määrä ja viimeksi lähetetyn viestin ajankohta. :heavy_check_mark:
-* Alueen otsikon kautta pääse kyseiselle alueelle ✔️
+* Uuden tunnuksen luominen:heavy_check_mark:
+* Voi kirjautua tunnuksella sisään. Kirjaudu ulos ✔️
+* Voi nähdä  listalla "public" ja hänen osallistuman "private" alueen otsikot, ketjujen ja viestien määrä ja viimeksi lähetetyn viestin ajankohta. :heavy_check_mark:
+* Alueen otsikon kautta pääsee kyseiselle alueelle ✔️
 * "Create forum"  
   * Voi luoda uuden private/public alueen antamalla alueen otsikko. ✔️
 * "Search messages" 
@@ -22,7 +22,7 @@ Alueen ja ketjun otsikot max 70 char
   * Navigointi suoraan alueeseen ✔️
 * "Show requests" 
   * Tämä painike näkyy, jos käyttäjä on jonkun alueen admin :heavy_check_mark:
-  * Aluekohtainen admin käyttäjä voi vahvistaa tai hylkää pyyntöä ✔️
+  * Aluekohtainen admin käyttäjä voi vahvistaa tai hylkätä pyyntöä ✔️
   * Pyyntö on muodossa: "User1" want add "User2" to private "Forum". ✔️
   * Navigointi suoraan alueeseen ✔️
 ### Alueella
