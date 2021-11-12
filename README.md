@@ -71,5 +71,10 @@ WebChatting voi testata [herokussa](https://web-chatting-app.herokuapp.com/)
 ## Tietokanta
 <img src="documentation/SQL.png">
 
+## Tietoturva
+
+Sovelluksesta löytyy koodia CSRF-haavoittuvuuksia vastaan.
+Sovelluksessa ei ole SQL-injektiota eikä XSS-haavoittuvuuksia. 
+
 ## Ulkoasu
 Sovelluksen ulkoasu toteutetiin manuaalisesti ilman kirjastoa.
