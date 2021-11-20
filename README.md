@@ -45,7 +45,7 @@ Alueen ja ketjun otsikot max 100 char, käyttäjätunnus ja salasana max 50 char
   * Admin voi poistaa alueen osallistuja ✔️
   * Admin pääsee "Invite user" sivulle ✔️
 * "Invite user"
-  * Muodostaa "Request" viestin alueen adminille.✔️
+  * Muodostaa "Request" viestin alueen adminille.✔️sys package
   * "Users not in forum"
 ### Ketjulla
 * Näkee  listalla "Message id","User id", "Content, "Sent at ✔️
@@ -67,7 +67,7 @@ Alueen ja ketjun otsikot max 100 char, käyttäjätunnus ja salasana max 50 char
 * käyttäjä tietojen tallentaminen -->
 ***
 ## Käyttäminen
-WebChatting voi testata [herokussa](https://web-chatting-app.herokuapp.com/)
+WebChatting voidaan testata [herokussa](https://web-chatting-app.herokuapp.com/)
 ## Tietokanta
 <img src="documentation/SQL.png">
 
