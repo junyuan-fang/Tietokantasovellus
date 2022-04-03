@@ -5,6 +5,8 @@ Sovelluksessa näkyy keskustelualueita, joista jokaisella on tietty aihe. Alueil
  * Ketju = Topic
  * Viesti = Message
 
+## Käyttäminen
+WebChatting voidaan testata [herokussa](https://web-chatting-app.herokuapp.com/)
 
 ## Sovelluksen ominaisuuksia:
 Viesti max 300 char
@@ -66,8 +68,6 @@ Alueen ja ketjun otsikot max 100 char, käyttäjätunnus ja salasana max 50 char
 * Kuvien tallentaminen
 * käyttäjä tietojen tallentaminen -->
 ***
-## Käyttäminen
-WebChatting voidaan testata [herokussa](https://web-chatting-app.herokuapp.com/)
 ## Tietokanta
 <img src="documentation/SQL.png">
 
