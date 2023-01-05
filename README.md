@@ -5,6 +5,8 @@ Sovelluksessa näkyy keskustelualueita, joista jokaisella on tietty aihe. Alueil
  * Ketju = Topic
  * Viesti = Message
 
+## Käyttäminen
+WebChatting voidaan testata [herokussa](https://web-chatting-app.herokuapp.com/)
 
 ## Sovelluksen ominaisuuksia:
 Viesti max 300 char
@@ -45,7 +47,7 @@ Alueen ja ketjun otsikot max 100 char, käyttäjätunnus ja salasana max 50 char
   * Admin voi poistaa alueen osallistuja ✔️
   * Admin pääsee "Invite user" sivulle ✔️
 * "Invite user"
-  * Muodostaa "Request" viestin alueen adminille.✔️
+  * Muodostaa "Request" viestin alueen adminille.✔️sys package
   * "Users not in forum"
 ### Ketjulla
 * Näkee  listalla "Message id","User id", "Content, "Sent at ✔️
@@ -66,10 +68,13 @@ Alueen ja ketjun otsikot max 100 char, käyttäjätunnus ja salasana max 50 char
 * Kuvien tallentaminen
 * käyttäjä tietojen tallentaminen -->
 ***
-## Käyttäminen
-WebChatting voi testata [herokussa](https://web-chatting-app.herokuapp.com/)
 ## Tietokanta
 <img src="documentation/SQL.png">
+
+## Tietoturva
+
+Sovelluksesta löytyy koodia CSRF-haavoittuvuuksia vastaan.
+Sovelluksessa ei ole SQL-injektiota eikä XSS-haavoittuvuuksia. 
 
 ## Ulkoasu
 Sovelluksen ulkoasu toteutetiin manuaalisesti ilman kirjastoa.

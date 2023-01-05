@@ -1,4 +1,9 @@
 
+
+* Virtuaaliympäristö
+  * ```python3 -m venv venv```
+  * ```source venv/bin/activate```
+  * ```deactivate```
 * SQL
   * ```start-pg.sh```
   * ```psql < schema.sql```
@@ -17,7 +22,15 @@
   *  SQL
     *  ```heroku psql```
     *  ```heroku psql < schema.sql```
-  *  Easier to run
-    *  ```export FLASK_APP=app.py```
-    *  ```export FLASK_ENV=development```
-    *  ```flask run```
+*  Easier to run
+     *  ```export FLASK_APP=app.py```
+     *  ```export FLASK_ENV=development```
+     *  ```flask run```
+*  fly
+   *  Update  
+     *  ```fly auth login```   
+     *  ```fly launch```  
+   *  Update  
+     *  ```fly auth login```   
+     *  ```fly launch``` 
+     
