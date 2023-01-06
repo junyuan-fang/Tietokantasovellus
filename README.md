@@ -1,5 +1,5 @@
 # Keskustelusovellus  
-Sovelluksessa näkyy keskustelualueita, joista jokaisella on tietty aihe. Alueilla on keskusteluketjuja, jotka muodostuvat viesteistä. Peruskäyttäjä voi luoda "private" tai "public" alueen, jonka luodessaan hänestä tulee alueen admin. Peruskäyttäjä, joka kuuluu alueseen, voi muodostaa pyynnön alueen adminille lisätäkseen toisen peruskäyttäjä alueseen. Admin käyttäjän tulee vahvistaa pyyntö etusivun kautta.
+Sovelluksessa näkyy keskustelualueita, joista jokaisella on tietty aihe. Alueella on keskusteluketjut, joita muodostuvat viesteistä. Peruskäyttäjä voi luoda "private" tai "public" alueen, ja sen luomisen jälkeen hänestä tulee kyseisen alueen admin. Peruskäyttäjä, joka kuuluu alueeseen, voi lähettää pyynnön alueen adminille lisätäkseen toisen peruskäyttäjä kyseiselle alueeselle. Admin käyttäjän tulee vahvistaa pyyntö etusivun kautta.
 * Hierarkkiat:
  * Alue = Forum
  * Ketju = Topic
@@ -9,7 +9,7 @@ Sovelluksessa näkyy keskustelualueita, joista jokaisella on tietty aihe. Alueil
 [How to run](https://github.com/junyuan-fang/WebChatting/blob/master/documentation/HowToRun.md)
 <!-- WebChatting voidaan testata [herokussa](https://web-chatting-app.herokuapp.com/) -->
 
-## Sovelluksen ominaisuuksia:
+## Sovelluksen ominaisuudet:
 Viesti max 300 char
 Alueen ja ketjun otsikot max 100 char, käyttäjätunnus ja salasana max 50 char.
 ### Etusivulla
@@ -20,16 +20,16 @@ Alueen ja ketjun otsikot max 100 char, käyttäjätunnus ja salasana max 50 char
 * "Create forum"  
   * Voi luoda uuden private/public alueen antamalla alueen otsikko. ✔️
 * "Search messages" 
-  * Voi etsiä kaikki viestit, joiden osa on sama kuin avainsana. ✔️
-  * Näytetään kaikki "Public" alueeseen liittyvät viestit + kaikki käyttäjä osallistuman "Private" alueen viestit ✔️
+  * Voi etsiä kaikki viestejä, joiden osa on sama kuin avainsana. ✔️
+  * Näyttää kaikki "Public" alueeseen liittyvät viestit + kaikki käyttäjä osallistuman "Private" alueen viestit ✔️
   * Navigointi suoraan alueeseen ✔️
 * "Show requests" 
-  * Tämä painike näkyy, jos käyttäjä on jonkun alueen admin :heavy_check_mark:
-  * Aluekohtainen admin käyttäjä voi vahvistaa tai hylkätä pyyntöä ✔️
+  * Tämä painike näkyy vain, jos käyttäjä on jonkun alueen admin :heavy_check_mark:
+  * Aluekohtainen admin käyttäjä voi vahvistaa tai hylätä pyynnön ✔️
   * Pyyntö on muodossa: "User1" want add "User2" to private "Forum". ✔️
   * Navigointi suoraan alueeseen ✔️
 ### Alueella
-* Näkee  listalla "Title", viestien määrä ja aika, jolloin viestiä lähetetiin viimeksi✔️️
+* Näkee  listalla "Title", viestien määrä ja viestin aika, jolloin viesti on lähetetty viimeksi✔️️
 * Ketjun otsikon kautta pääse kyseiselle ketjulle ✔️
 * Pääsee etusivulle takaisin. ✔️
 * "Create topic"
@@ -53,8 +53,8 @@ Alueen ja ketjun otsikot max 100 char, käyttäjätunnus ja salasana max 50 char
 ### Ketjulla
 * Näkee  listalla "Message id","User id", "Content, "Sent at ✔️
 * Pääsee alueelle takaisin ✔️
-* Viestin kirjoittaja ja admin pääsee muokkamaan viestiä ✔️
-* Admin ja viestin kirjoittaja pääsee poistamaan viestin ✔️
+* Viestin kirjoittaja ja admin pääsevät muokkamaan viestiä ✔️
+* Admin ja viestin kirjoittaja pääsevät poistamaan viestin ✔️
 * "Create Message"
   * Voi kirjoittaa uuden viestin ketjulle ✔️
 * "Edit topic"
