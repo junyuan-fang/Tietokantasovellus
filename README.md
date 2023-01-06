@@ -6,7 +6,8 @@ Sovelluksessa näkyy keskustelualueita, joista jokaisella on tietty aihe. Alueil
  * Viesti = Message
 
 ## Käyttäminen
-WebChatting voidaan testata [herokussa](https://web-chatting-app.herokuapp.com/)
+[How to run](https://github.com/junyuan-fang/WebChatting/blob/master/documentation/HowToRun.md)
+<!-- WebChatting voidaan testata [herokussa](https://web-chatting-app.herokuapp.com/) -->
 
 ## Sovelluksen ominaisuuksia:
 Viesti max 300 char
