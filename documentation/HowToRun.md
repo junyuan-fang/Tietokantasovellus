@@ -1,11 +1,16 @@
 
+* Create a `.env` file
+  ```
+  DATABASE_URL=postgresql:///$DATABASE_NAME # replace $DATABASE_NAME to psql's database name.
+  SECRET_KEY=95d3763bb55e744e77dd181a47b4e1c6 # please regenerate SECRET_KEY to another. 
+  ```
 
 * Virtuaaliympäristö
   * ```python3 -m venv venv```
   * ```source venv/bin/activate```
   * ```deactivate```
 * SQL
-  * ```start-pg.sh```
+  * ```start-pg.sh``` or `brew services start postgresql@15`
   * ```psql < schema.sql```
   * ```Ctrl-C```
 * Heroku
